@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:share_your_route_front/main.dart';
+import 'package:share_your_route_front/itinerarioRuta.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MaterialApp(home: LoginPage()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
@@ -26,5 +27,32 @@ void main() {
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+  });
+
+  testWidgets('ItinerarioRuta page loads correctly', (WidgetTester tester) async {
+    // Build ItinerarioRuta widget and trigger a frame.
+    await tester.pumpWidget(MaterialApp(home: ItinerarioRuta()));
+
+    // Verify that the title is displayed.
+    expect(find.text('Cotopaxi: Belleza Natural'), findsOneWidget);
+
+    // Verify that the image is displayed.
+    expect(find.byType(Image), findsOneWidget);
+
+    // Verify that itinerary items are displayed.
+    expect(find.text('Chuquiragua Lodge'), findsOneWidget);
+    expect(find.text('Laguna de Limpiopungo'), findsOneWidget);
+    expect(find.text('Museo de Arte Moderno'), findsOneWidget);
+    expect(find.text('Refugio José Rivas'), findsOneWidget);
+
+    // Verify that the date is displayed.
+    expect(find.text('20 de enero del 2024'), findsOneWidget);
+
+    // Verify that the price is displayed.
+    expect(find.text('\$75'), findsOneWidget);
+    expect(find.text('\$45'), findsOneWidget);
+
+    // Verify that the button is displayed.
+    expect(find.text('Comprar paquete'), findsOneWidget);
   });
 }
