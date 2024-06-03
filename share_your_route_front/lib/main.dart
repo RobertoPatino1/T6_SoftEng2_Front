@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:share_your_route_front/home.dart';
+import 'package:share_your_route_front/itinerarioRuta.dart';
+import 'package:share_your_route_front/createRoute2.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -97,6 +99,36 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 130),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => ItinerarioRuta()),
+                    );
+                  },
+                  child: Text(
+                    'Ver itinerario de ruta',
+                    style: TextStyle(
+                      color: Color.fromRGBO(37, 60, 89, 1),
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => CreateRoute2()),
+                    );
+                  },
+                  child: Text(
+                    'Crear ruta nueva',
+                    style: TextStyle(
+                      color: Color.fromRGBO(37, 60, 89, 1),
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
                 Text('Usuario nuevo? Crea una cuenta'),
               ],
             ),
