@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:share_your_route_front/main.dart';
 import 'package:share_your_route_front/itinerarioRuta.dart';
+import 'package:share_your_route_front/createRoute2.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -54,5 +55,19 @@ void main() {
 
     // Verify that the button is displayed.
     expect(find.text('Comprar paquete'), findsOneWidget);
+  });
+
+  testWidgets('CreateRoute2 page loads correctly', (WidgetTester tester) async {
+    // Build CreateRoute2 widget and trigger a frame.
+    await tester.pumpWidget(MaterialApp(home: CreateRoute2()));
+
+    // Verify that the title and elements are displayed correctly.
+    expect(find.text('Mi Ruta De Cuenca'), findsOneWidget);
+    expect(find.text('Crear'), findsOneWidget);
+    expect(find.byType(TextField), findsWidgets);
+    expect(find.byType(Switch), findsWidgets);
+    expect(find.byType(Slider), findsWidgets);
+    expect(find.byType(DropdownButton), findsWidgets);
+
   });
 }
