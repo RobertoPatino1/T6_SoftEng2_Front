@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Destinations {
   final String name;
   final double duration;

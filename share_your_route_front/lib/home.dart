@@ -47,7 +47,7 @@ class _NavigationExampleState extends State<NavigationExample> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Color.fromRGBO(211, 225, 244, 1),
+      backgroundColor: const Color.fromRGBO(211, 225, 244, 1),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
@@ -81,20 +81,20 @@ class _NavigationExampleState extends State<NavigationExample> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                margin:
-                    EdgeInsets.only(top: 50, bottom: 10, left: 10, right: 20),
-                child: Text(
+                margin: const EdgeInsets.only(
+                    top: 30, bottom: 10, left: 10, right: 10),
+                child: const Text(
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                        fontSize: 35.0,
+                        fontSize: 25.0,
                         color: Color.fromRGBO(45, 75, 115, 1),
                         fontWeight: FontWeight.bold,
                         height: 1),
                     "Empecemos una aventura!"),
               ),
               Container(
-                margin: EdgeInsets.all(5),
-                child: Text(
+                margin: const EdgeInsets.all(5),
+                child: const Text(
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 15.0,
@@ -103,11 +103,11 @@ class _NavigationExampleState extends State<NavigationExample> {
                     "¿Deseas crear una ruta?"),
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 10),
+                margin: const EdgeInsets.only(bottom: 10),
                 height: 40,
                 width: 150,
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(45, 75, 115, 1),
+                  color: const Color.fromRGBO(45, 75, 115, 1),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextButton(
@@ -132,34 +132,72 @@ class _NavigationExampleState extends State<NavigationExample> {
                       ],
                     )),
               ),
+              Container(
+                alignment: Alignment.topLeft,
+                margin: const EdgeInsets.only(left: 10, right: 20),
+                child: const Text(
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        color: Color.fromRGBO(45, 75, 115, 1),
+                        fontWeight: FontWeight.bold,
+                        height: 1),
+                    "Rutas privadas"),
+              ),
               Expanded(
                 child: ListView.builder(
-                  scrollDirection: Axis
-                      .horizontal, // Establece la dirección de desplazamiento horizontal
+                  scrollDirection: Axis.horizontal,
                   itemCount: destinations.length,
                   itemBuilder: (context, index) {
-                    Destinations destination =
-                        destinations[index]; // Obtener el destino actual
+                    Destinations destination = destinations[index];
 
                     return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
-                        // Envuelve el Container en un Row
                         children: [
-                          Container(
-                            width: 160,
-                            color: Colors.blue,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(destination.name,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                                Text("Duración: ${destination.duration} horas"),
-                                Text(destination.description),
-                                Text(
-                                    "Hora de inicio: ${destination.startTime}"),
-                              ],
+                          GestureDetector(
+                            onTap: () {
+                              // Acción a realizar al hacer clic en el primer contenedor
+                              print('Primer contenedor clickeado');
+                            },
+                            child: Container(
+                              width: 160,
+                              margin:
+                                  const EdgeInsets.only(top: 12, bottom: 12),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Container(
+                                      width: 100,
+                                      child: Image.asset(
+                                          'asset/images/paisaje.jpg'),
+                                    ),
+                                  ),
+                                  Text(destination.name,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12)),
+                                  Text("${destination.duration} H",
+                                      style: const TextStyle(fontSize: 10)),
+                                  Text(destination.description,
+                                      style: const TextStyle(fontSize: 13)),
+                                  Text("${destination.startTime}",
+                                      style: const TextStyle(fontSize: 10))
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -168,34 +206,64 @@ class _NavigationExampleState extends State<NavigationExample> {
                   },
                 ),
               ),
-              SizedBox(height: 20),
+              Container(
+                alignment: Alignment.topLeft,
+                margin: const EdgeInsets.only(bottom: 10, left: 10, right: 20),
+                child: const Text(
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        color: Color.fromRGBO(45, 75, 115, 1),
+                        fontWeight: FontWeight.bold,
+                        height: 1),
+                    "Rutas públicas"),
+              ),
               Expanded(
                 child: ListView.builder(
-                  scrollDirection: Axis
-                      .horizontal, // Establece la dirección de desplazamiento horizontal
+                  scrollDirection: Axis.horizontal,
                   itemCount: destinations.length,
                   itemBuilder: (context, index) {
-                    Destinations destination =
-                        destinations[index]; // Obtener el destino actual
+                    Destinations destination = destinations[index];
 
                     return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
-                        // Envuelve el Container en un Row
                         children: [
                           Container(
                             width: 160,
-                            color: Colors.blue,
+                            margin: EdgeInsets.only(top: 12, bottom: 12),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Center(
+                                  child: Container(
+                                    width: 100,
+                                    child:
+                                        Image.asset('asset/images/paisaje.jpg'),
+                                  ),
+                                ),
                                 Text(destination.name,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                                Text("Duración: ${destination.duration} horas"),
-                                Text(destination.description),
-                                Text(
-                                    "Hora de inicio: ${destination.startTime}"),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12)),
+                                Text("${destination.duration} H",
+                                    style: const TextStyle(fontSize: 10)),
+                                Text(destination.description,
+                                    style: const TextStyle(fontSize: 13)),
+                                Text("${destination.startTime}",
+                                    style: const TextStyle(fontSize: 10))
                               ],
                             ),
                           ),
