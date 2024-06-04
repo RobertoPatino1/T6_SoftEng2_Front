@@ -99,36 +99,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 130),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => ItinerarioRuta()),
-                    );
-                  },
-                  child: Text(
-                    'Ver itinerario de ruta',
-                    style: TextStyle(
-                      color: Color.fromRGBO(37, 60, 89, 1),
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => CreateRoute2()),
-                    );
-                  },
-                  child: Text(
-                    'Crear ruta nueva',
-                    style: TextStyle(
-                      color: Color.fromRGBO(37, 60, 89, 1),
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
                 Text('Usuario nuevo? Crea una cuenta'),
               ],
             ),

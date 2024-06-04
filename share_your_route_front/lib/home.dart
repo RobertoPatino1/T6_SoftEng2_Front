@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_route_front/classes/destinations.dart';
+import 'package:share_your_route_front/createRoute2.dart';
+import 'package:share_your_route_front/itinerarioRuta.dart';
 
 List<Destinations> destinations = [
   Destinations(
@@ -111,7 +113,12 @@ class _NavigationExampleState extends State<NavigationExample> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => CreateRoute2()),
+                      );
+                    },
                     child: const Row(
                       children: [
                         Text(
@@ -157,8 +164,11 @@ class _NavigationExampleState extends State<NavigationExample> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              // Acción a realizar al hacer clic en el primer contenedor
-                              print('Primer contenedor clickeado');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => ItinerarioRuta()),
+                              );
                             },
                             child: Container(
                               width: 160,
@@ -250,8 +260,9 @@ class _NavigationExampleState extends State<NavigationExample> {
                                 Center(
                                   child: Container(
                                     width: 100,
-                                    child:
-                                        Image.asset('asset/images/paisaje.jpg'),
+                                    child: Image.asset(
+                                        'asset/images/paisaje.jpg',
+                                        fit: BoxFit.cover),
                                   ),
                                 ),
                                 Text(destination.name,
