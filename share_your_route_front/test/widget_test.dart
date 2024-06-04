@@ -9,13 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:share_your_route_front/main.dart';
-import 'package:share_your_route_front/itinerarioRuta.dart';
+import 'package:share_your_route_front/route_itinerary_page.dart';
 import 'package:share_your_route_front/createRoute2.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MaterialApp(home: LoginPage()));
+    await tester.pumpWidget(MaterialApp(home: MainPage()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
@@ -33,7 +33,7 @@ void main() {
   testWidgets('ItinerarioRuta page loads correctly',
       (WidgetTester tester) async {
     // Build ItinerarioRuta widget and trigger a frame.
-    await tester.pumpWidget(MaterialApp(home: ItinerarioRuta()));
+    await tester.pumpWidget(MaterialApp(home: RouteItineraryPage()));
 
     // Verify that the title is displayed.
     expect(find.text('Cotopaxi: Belleza Natural'), findsOneWidget);

@@ -1,12 +1,12 @@
-
 import 'package:flutter/material.dart';
 
-class ItinerarioRuta extends StatelessWidget {
-  const ItinerarioRuta({super.key});
+class RouteItineraryPage extends StatelessWidget {
+  const RouteItineraryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -14,7 +14,8 @@ class ItinerarioRuta extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text('Cotopaxi: Belleza Natural', style: TextStyle(color: Color.fromRGBO(37, 60, 89, 1))),
+        title: const Text('Cotopaxi: Belleza Natural',
+            style: TextStyle(color: Color.fromRGBO(37, 60, 89, 1))),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -31,35 +32,45 @@ class ItinerarioRuta extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.person),
                   SizedBox(width: 10),
                   Icon(Icons.public),
                 ],
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Itinerario de rutas',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(37, 60, 89, 1)),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(37, 60, 89, 1)),
               ),
               const SizedBox(height: 10),
-              ItineraryItem(time: '9:00 AM', description: 'Chuquiragua Lodge'),
-              ItineraryItem(time: '11:00 AM', description: 'Laguna de Limpiopungo'),
-              ItineraryItem(time: '1:00 PM', description: 'Museo de Arte Moderno'),
-              ItineraryItem(time: '3:00 PM', description: 'Refugio José Rivas'),
+              const ItineraryItem(
+                  time: '9:00 AM', description: 'Chuquiragua Lodge'),
+              const ItineraryItem(
+                  time: '11:00 AM', description: 'Laguna de Limpiopungo'),
+              const ItineraryItem(
+                  time: '1:00 PM', description: 'Museo de Arte Moderno'),
+              const ItineraryItem(
+                  time: '3:00 PM', description: 'Refugio José Rivas'),
               const SizedBox(height: 16),
-              Center(
+              const Center(
                 child: Text(
                   '20 de enero del 2024',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color.fromRGBO(37, 60, 89, 1)),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(37, 60, 89, 1)),
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'Paquete completo:',
                     style: TextStyle(
@@ -92,8 +103,9 @@ class ItinerarioRuta extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 37, 60, 89),
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    backgroundColor: const Color.fromARGB(255, 37, 60, 89),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
