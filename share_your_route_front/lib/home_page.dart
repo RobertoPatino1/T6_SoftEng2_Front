@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_route_front/classes/destinations.dart';
 import 'package:share_your_route_front/createRoute2.dart';
-import 'package:share_your_route_front/routeItineraryPage.dart';
+import 'package:share_your_route_front/route_itinerary_page.dart';
 
 //Listas de prueba
 List<Destinations> publicDestinations = [

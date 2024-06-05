@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_your_route_front/map.dart';
 
 class RouteItineraryPage extends StatelessWidget {
   const RouteItineraryPage({super.key});
@@ -8,6 +9,7 @@ class RouteItineraryPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -68,37 +70,6 @@ class RouteItineraryPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Paquete completo:',
-                    style: TextStyle(
-                      fontSize: 18,
-                      decoration: TextDecoration.lineThrough,
-                      color: Colors.red,
-                    ),
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    '\$75',
-                    style: TextStyle(
-                      fontSize: 18,
-                      decoration: TextDecoration.lineThrough,
-                      color: Colors.red,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    '\$45',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                ],
-              ),
               const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
@@ -111,10 +82,13 @@ class RouteItineraryPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    // Action to buy the package
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const MapPage()),
+                    );
                   },
                   child: const Text(
-                    'Comprar paquete',
+                    'Empezar Ruta',
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
