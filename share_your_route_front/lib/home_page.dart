@@ -1,38 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:share_your_route_front/classes/destinations.dart';
+import 'package:intl/intl.dart';
+import 'package:share_your_route_front/classes/place.dart';
+import 'package:share_your_route_front/classes/tourist_route.dart';
 import 'package:share_your_route_front/createRoute2.dart';
+import 'package:share_your_route_front/enums/route_type.dart';
 import 'package:share_your_route_front/route_itinerary_page.dart';
+import 'package:share_your_route_front/route_type_helper.dart';
 
 //Listas de prueba
-List<Destinations> publicDestinations = [
-  Destinations(
-      name: "Centro artístico",
-      duration: 3,
-      image: "centro_artistico",
-      description: "Descubre las maravillas artísticas",
-      startTime: "12:00"),
-  Destinations(
-      name: "Fauna silvestre",
-      duration: 5,
-      image: "fauna_silvestre",
-      description: "Descubre la fauna del lugar",
-      startTime: "10:00"),
-  Destinations(
-      name: "Ruta gastronómica",
-      image: "ruta_gastronomica",
-      duration: 6,
-      description: "Encuentra los mejores platos típicos",
-      startTime: "14:00"),
+List<Map<Place, DateTime>> places = [
+  {Place(name: "Lugar1", entryPrice: 0.0): DateTime(2023, 6, 9, 10, 30)},
+  {Place(name: "Lugar2", entryPrice: 0.0): DateTime(2023, 6, 9, 11, 00)},
+  {Place(name: "Lugar3", entryPrice: 0.0): DateTime(2023, 6, 9, 11, 30)},
+  {Place(name: "Lugar4", entryPrice: 0.0): DateTime(2023, 6, 9, 12, 00)},
+  {Place(name: "Lugar5", entryPrice: 0.0): DateTime(2023, 6, 9, 12, 15)}
 ];
 
-List<Destinations> privateDestinations = [
-  Destinations(
+List<TouristRoute> publicRoutes = [
+  TouristRoute(
+      name: "Centro artístico",
+      placesList: places,
+      startTime: DateTime(2023, 6, 9, 10, 30),
+      endTime: DateTime(2023, 6, 9, 12, 30),
+      image: "centro_artistico",
+      description: "Descubre las maravillas artísticas",
+      hasStarted: false,
+      routeType: [RouteType.culture, RouteType.city]),
+  TouristRoute(
+      name: "Fauna silvestre",
+      placesList: places,
+      startTime: DateTime(2023, 6, 9, 10, 30),
+      endTime: DateTime(2023, 6, 9, 12, 30),
+      image: "fauna_silvestre",
+      description: "Descubre la fauna del lugar",
+      hasStarted: false,
+      routeType: [RouteType.nature]),
+  TouristRoute(
+      name: "Ruta gastronómica",
+      image: "ruta_gastronomica",
+      placesList: places,
+      startTime: DateTime(2023, 6, 9, 10, 30),
+      endTime: DateTime(2023, 6, 9, 12, 30),
+      description: "Encuentra los mejores platos típicos",
+      hasStarted: false,
+      routeType: [RouteType.gastronomic, RouteType.city]),
+];
+
+List<TouristRoute> privateRoutes = [
+  TouristRoute(
       name: "Tarde con amigos",
-      duration: 3,
+      placesList: places,
+      startTime: DateTime(2023, 6, 9, 10, 30),
+      endTime: DateTime(2023, 6, 9, 12, 30),
       image: "no_image",
       description: "Paseo privado con amigos",
-      startTime: "13:00"),
+      hasStarted: false,
+      routeType: [RouteType.gastronomic, RouteType.adventure, RouteType.city]),
 ];
+
+String formatDuration(Duration duration) {
+  int hours = duration.inHours;
+  int minutes = duration.inMinutes.remainder(60);
+  return '$hours horas y $minutes minutos';
+}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -56,13 +86,12 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   int currentPageIndex = 0;
 
-  Widget buildRouteCard(
-      BuildContext context, List<Destinations> destinationsList) {
+  Widget buildRouteCard(BuildContext context, List<TouristRoute> routesList) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: destinationsList.length,
+      itemCount: routesList.length,
       itemBuilder: (context, index) {
-        Destinations destination = destinationsList[index];
+        TouristRoute route = routesList[index];
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -72,7 +101,10 @@ class HomeState extends State<Home> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => RouteItineraryPage()),
+                    MaterialPageRoute(
+                        builder: (_) => RouteItineraryPage(
+                              route: route,
+                            )),
                   );
                 },
                 child: Container(
@@ -103,30 +135,46 @@ class HomeState extends State<Home> {
                                     topRight: Radius.circular(20)),
                                 image: DecorationImage(
                                   image: AssetImage(
-                                      "asset/images/${destination.image}.jpg"),
+                                      "asset/images/${route.image}.jpg"),
                                   fit: BoxFit.cover,
                                 ))),
                       ),
                       Center(
-                          child: Text(destination.name,
+                          child: Text(route.name,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                   color: Color.fromRGBO(37, 60, 89, 1)))),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: route.routeType.map((routeType) {
+                            return Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Icon(
+                                RouteTypeHelper.getIconData(routeType),
+                                size: 20.0, // Set the size of the icon
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
                       Container(
                           margin:
                               EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                          child: Text("${destination.duration.toInt()}H",
+                          child: Text(
+                              "${DateFormat('HH:mm').format(route.startTime)}H",
                               style: const TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold))),
                       Container(
                           margin:
                               EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                          child: Text(destination.description,
+                          child: Text(route.description,
                               style: const TextStyle(fontSize: 10))),
                       Container(
                           margin: EdgeInsets.symmetric(horizontal: 5),
-                          child: Text("${destination.startTime}",
+                          child: Text(
+                              "${formatDuration(route.endTime.difference(route.startTime))}",
                               style: const TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold)))
                     ],
@@ -260,7 +308,7 @@ class HomeState extends State<Home> {
                         height: 1),
                     "Rutas privadas"),
               ),
-              Expanded(child: buildRouteCard(context, privateDestinations)),
+              Expanded(child: buildRouteCard(context, privateRoutes)),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.only(bottom: 10, left: 10, right: 20),
@@ -273,7 +321,7 @@ class HomeState extends State<Home> {
                         height: 1),
                     "Rutas públicas"),
               ),
-              Expanded(child: buildRouteCard(context, publicDestinations)),
+              Expanded(child: buildRouteCard(context, publicRoutes)),
             ],
           ),
 

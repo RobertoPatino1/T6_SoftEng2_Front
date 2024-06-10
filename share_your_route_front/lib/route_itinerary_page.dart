@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:share_your_route_front/classes/place.dart';
+import 'package:share_your_route_front/classes/tourist_route.dart';
 import 'package:share_your_route_front/map.dart';
+import 'package:share_your_route_front/route_type_helper.dart';
 
 class RouteItineraryPage extends StatelessWidget {
-  const RouteItineraryPage({super.key});
-
+  final TouristRoute route;
+  const RouteItineraryPage({Key? key, required this.route}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,8 +20,10 @@ class RouteItineraryPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Cotopaxi: Belleza Natural',
-            style: TextStyle(color: Color.fromRGBO(37, 60, 89, 1))),
+        title: Text(route.name,
+            style: const TextStyle(
+                color: Color.fromRGBO(37, 60, 89, 1),
+                fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -26,21 +32,30 @@ class RouteItineraryPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Image.asset(
-                  'asset/images/cotopaxi.jpg', // Ensure the image path is correct
-                  width: double.infinity,
-                  height: 200,
-                  fit: BoxFit.cover,
-                ),
+                child: Container(
+                    width: 400,
+                    height: 200,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        image: DecorationImage(
+                          image: AssetImage("asset/images/${route.image}.jpg"),
+                          fit: BoxFit.cover,
+                        ))),
               ),
               const SizedBox(height: 16),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.person),
-                  SizedBox(width: 10),
-                  Icon(Icons.public),
-                ],
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: route.routeType.map((routeType) {
+                    return Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Icon(
+                        RouteTypeHelper.getIconData(routeType),
+                        size: 30.0, // Set the size of the icon
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
               const SizedBox(height: 16),
               const Text(
@@ -51,18 +66,32 @@ class RouteItineraryPage extends StatelessWidget {
                     color: Color.fromRGBO(37, 60, 89, 1)),
               ),
               const SizedBox(height: 10),
-              const ItineraryItem(
-                  time: '9:00 AM', description: 'Chuquiragua Lodge'),
-              const ItineraryItem(
-                  time: '11:00 AM', description: 'Laguna de Limpiopungo'),
-              const ItineraryItem(
-                  time: '1:00 PM', description: 'Museo de Arte Moderno'),
-              const ItineraryItem(
-                  time: '3:00 PM', description: 'Refugio José Rivas'),
+              Container(
+                height: 200, // Altura definida del contenedor
+                child: SingleChildScrollView(
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: route.placesList.length,
+                    itemBuilder: (context, index) {
+                      Place place = route.placesList[index].keys.first;
+                      String startTime = DateFormat('HH:mm')
+                          .format(route.placesList[index].values.first);
+                      return SizedBox(
+                        width: 100,
+                        height: 50,
+                        child: ItineraryItem(
+                            time: startTime, description: place.name),
+                      );
+                    },
+                  ),
+                ),
+              ),
               const SizedBox(height: 16),
-              const Center(
+              Center(
                 child: Text(
-                  '20 de enero del 2024',
+                  DateFormat('d-m-y').format(route.startTime),
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
