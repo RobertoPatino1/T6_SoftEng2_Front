@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, library_private_types_in_public_api
 
 import 'dart:async';
 
@@ -11,6 +11,8 @@ void main() => runApp(MaterialApp(
     ));
 
 class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -38,6 +40,7 @@ class _MainPageState extends State<MainPage> {
             Padding(
               padding: const EdgeInsets.only(top: 60.0),
               child: Center(
+                // ignore: sized_box_for_whitespace
                 child: Container(
                   width: 200,
                   height: 150,

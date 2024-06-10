@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:share_your_route_front/classes/place.dart';
@@ -36,7 +38,8 @@ class RouteItineraryPage extends StatelessWidget {
                     width: 400,
                     height: 200,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                         image: DecorationImage(
                           image: AssetImage("asset/images/${route.image}.jpg"),
                           fit: BoxFit.cover,
@@ -51,7 +54,7 @@ class RouteItineraryPage extends StatelessWidget {
                       padding: const EdgeInsets.all(0.0),
                       child: Icon(
                         RouteTypeHelper.getIconData(routeType),
-                        size: 30.0, // Set the size of the icon
+                        size: 30.0,
                       ),
                     );
                   }).toList(),
@@ -66,13 +69,14 @@ class RouteItineraryPage extends StatelessWidget {
                     color: Color.fromRGBO(37, 60, 89, 1)),
               ),
               const SizedBox(height: 10),
+              // ignore: sized_box_for_whitespace
               Container(
-                height: 200, // Altura definida del contenedor
+                height: 200,
                 child: SingleChildScrollView(
                   child: ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: route.placesList.length,
                     itemBuilder: (context, index) {
                       Place place = route.placesList[index].keys.first;
@@ -92,7 +96,7 @@ class RouteItineraryPage extends StatelessWidget {
               Center(
                 child: Text(
                   DateFormat('d-m-y').format(route.startTime),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Color.fromRGBO(37, 60, 89, 1)),

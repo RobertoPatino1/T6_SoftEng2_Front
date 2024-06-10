@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -5,7 +7,7 @@ import 'package:latlong2/latlong.dart';
 const MAPBOX_ACCESS_TOKEN =
     'sk.eyJ1IjoiZ2phcmV2YWwiLCJhIjoiY2x4MThna3hzMDhqZDJxcTdjaXFxc29vaSJ9.xP7hhukr96mBVQ6aakeAFg';
 
-final myPosition = LatLng(-2.180651, -79.853777);
+const myPosition = LatLng(-2.180651, -79.853777);
 
 class MapPage extends StatelessWidget {
   const MapPage({super.key});
@@ -31,7 +33,7 @@ class MapState extends State<Map> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FlutterMap(
-          options: MapOptions(
+          options: const MapOptions(
               initialCenter: myPosition,
               minZoom: 5,
               maxZoom: 25,
@@ -40,12 +42,12 @@ class MapState extends State<Map> {
             TileLayer(
               urlTemplate:
                   'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-              additionalOptions: {
+              additionalOptions: const {
                 'accessToken': MAPBOX_ACCESS_TOKEN,
                 'id': 'mapbox/streets-v12'
               },
             ),
-            MarkerLayer(markers: [
+            const MarkerLayer(markers: [
               Marker(
                 width: 80.0,
                 height: 80.0,

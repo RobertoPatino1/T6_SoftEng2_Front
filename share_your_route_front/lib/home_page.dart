@@ -130,7 +130,7 @@ class HomeState extends State<Home> {
                             width: 160,
                             height: 80,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(20),
                                     topRight: Radius.circular(20)),
                                 image: DecorationImage(
@@ -160,21 +160,22 @@ class HomeState extends State<Home> {
                         ),
                       ),
                       Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
                           child: Text(
                               "${DateFormat('HH:mm').format(route.startTime)}H",
                               style: const TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold))),
                       Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
                           child: Text(route.description,
                               style: const TextStyle(fontSize: 10))),
                       Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
-                              "${formatDuration(route.endTime.difference(route.startTime))}",
+                              formatDuration(
+                                  route.endTime.difference(route.startTime)),
                               style: const TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold)))
                     ],
@@ -273,7 +274,7 @@ class HomeState extends State<Home> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => CreateRoute2()),
+                        MaterialPageRoute(builder: (_) => const CreateRoute2()),
                       );
                     },
                     child: const Row(
