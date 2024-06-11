@@ -1,6 +1,8 @@
 // ignore_for_file: use_super_parameters, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:share_your_route_front/classes/place.dart';
 import 'package:share_your_route_front/classes/tourist_route.dart';
@@ -8,8 +10,28 @@ import 'package:share_your_route_front/map.dart';
 import 'package:share_your_route_front/route_type_helper.dart';
 
 class RouteItineraryPage extends StatelessWidget {
-  final TouristRoute route;
-  const RouteItineraryPage({Key? key, required this.route}) : super(key: key);
+  Future<Position> determinePosition() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      //manejar error de otra forma
+      if (permission == LocationPermission.denied) {
+        return Future.error("Error");
+      }
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
+  void getCurrentLocation() async {
+    Position position = await determinePosition();
+    print(position.longitude);
+    print(position.latitude);
+  }
+
+  final TouristRoute touristRoute;
+  const RouteItineraryPage({Key? key, required this.touristRoute})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +44,7 @@ class RouteItineraryPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text(route.name,
+        title: Text(touristRoute.name,
             style: const TextStyle(
                 color: Color.fromRGBO(37, 60, 89, 1),
                 fontWeight: FontWeight.bold)),
@@ -41,7 +63,8 @@ class RouteItineraryPage extends StatelessWidget {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                         image: DecorationImage(
-                          image: AssetImage("asset/images/${route.image}.jpg"),
+                          image: AssetImage(
+                              "asset/images/${touristRoute.image}.jpg"),
                           fit: BoxFit.cover,
                         ))),
               ),
@@ -49,7 +72,7 @@ class RouteItineraryPage extends StatelessWidget {
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: route.routeType.map((routeType) {
+                  children: touristRoute.routeType.map((routeType) {
                     return Padding(
                       padding: const EdgeInsets.all(0.0),
                       child: Icon(
@@ -77,11 +100,11 @@ class RouteItineraryPage extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: route.placesList.length,
+                    itemCount: touristRoute.placesList.length,
                     itemBuilder: (context, index) {
-                      Place place = route.placesList[index].keys.first;
+                      Place place = touristRoute.placesList[index].keys.first;
                       String startTime = DateFormat('HH:mm')
-                          .format(route.placesList[index].values.first);
+                          .format(touristRoute.placesList[index].values.first);
                       return SizedBox(
                         width: 100,
                         height: 50,
@@ -95,7 +118,7 @@ class RouteItineraryPage extends StatelessWidget {
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  DateFormat('d-m-y').format(route.startTime),
+                  DateFormat('d-m-y').format(touristRoute.startTime),
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -115,9 +138,11 @@ class RouteItineraryPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
+                    getCurrentLocation();
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const MapPage()),
+                      MaterialPageRoute(
+                          builder: (_) => MapPage(touristRoute: touristRoute)),
                     );
                   },
                   child: const Text(

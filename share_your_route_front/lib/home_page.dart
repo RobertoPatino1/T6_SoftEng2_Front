@@ -91,7 +91,7 @@ class HomeState extends State<Home> {
       scrollDirection: Axis.horizontal,
       itemCount: routesList.length,
       itemBuilder: (context, index) {
-        TouristRoute route = routesList[index];
+        TouristRoute touristRoute = routesList[index];
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -103,7 +103,7 @@ class HomeState extends State<Home> {
                     context,
                     MaterialPageRoute(
                         builder: (_) => RouteItineraryPage(
-                              route: route,
+                              touristRoute: touristRoute,
                             )),
                   );
                 },
@@ -135,12 +135,12 @@ class HomeState extends State<Home> {
                                     topRight: Radius.circular(20)),
                                 image: DecorationImage(
                                   image: AssetImage(
-                                      "asset/images/${route.image}.jpg"),
+                                      "asset/images/${touristRoute.image}.jpg"),
                                   fit: BoxFit.cover,
                                 ))),
                       ),
                       Center(
-                          child: Text(route.name,
+                          child: Text(touristRoute.name,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
@@ -148,12 +148,12 @@ class HomeState extends State<Home> {
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: route.routeType.map((routeType) {
+                          children: touristRoute.routeType.map((routeType) {
                             return Padding(
                               padding: const EdgeInsets.all(2.0),
                               child: Icon(
                                 RouteTypeHelper.getIconData(routeType),
-                                size: 20.0, // Set the size of the icon
+                                size: 20.0,
                               ),
                             );
                           }).toList(),
@@ -163,19 +163,19 @@ class HomeState extends State<Home> {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 5),
                           child: Text(
-                              "${DateFormat('HH:mm').format(route.startTime)}H",
+                              "${DateFormat('HH:mm').format(touristRoute.startTime)}H",
                               style: const TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold))),
                       Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 5),
-                          child: Text(route.description,
+                          child: Text(touristRoute.description,
                               style: const TextStyle(fontSize: 10))),
                       Container(
                           margin: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
-                              formatDuration(
-                                  route.endTime.difference(route.startTime)),
+                              formatDuration(touristRoute.endTime
+                                  .difference(touristRoute.startTime)),
                               style: const TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold)))
                     ],
