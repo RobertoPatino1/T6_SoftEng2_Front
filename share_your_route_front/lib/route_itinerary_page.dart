@@ -10,25 +10,6 @@ import 'package:share_your_route_front/map.dart';
 import 'package:share_your_route_front/route_type_helper.dart';
 
 class RouteItineraryPage extends StatelessWidget {
-  Future<Position> determinePosition() async {
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      //manejar error de otra forma
-      if (permission == LocationPermission.denied) {
-        return Future.error("Error");
-      }
-    }
-    return await Geolocator.getCurrentPosition();
-  }
-
-  void getCurrentLocation() async {
-    Position position = await determinePosition();
-    print(position.longitude);
-    print(position.latitude);
-  }
-
   final TouristRoute touristRoute;
   const RouteItineraryPage({Key? key, required this.touristRoute})
       : super(key: key);
@@ -138,7 +119,6 @@ class RouteItineraryPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    getCurrentLocation();
                     Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -9,8 +9,6 @@ import 'package:share_your_route_front/classes/tourist_route.dart';
 const MAPBOX_ACCESS_TOKEN =
     'sk.eyJ1IjoiZ2phcmV2YWwiLCJhIjoiY2x4MThna3hzMDhqZDJxcTdjaXFxc29vaSJ9.xP7hhukr96mBVQ6aakeAFg';
 
-const myPosition = LatLng(-2.180651, -79.853777);
-
 class MapPage extends StatelessWidget {
   final TouristRoute touristRoute;
   const MapPage({Key? key, required this.touristRoute}) : super(key: key);
@@ -33,6 +31,35 @@ class Map extends StatefulWidget {
 }
 
 class MapState extends State<Map> {
+  LatLng? myPosition;
+
+  Future<Position> determinePosition() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      //manejar error de otra forma
+      if (permission == LocationPermission.denied) {
+        return Future.error("Error");
+      }
+    }
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
+  void getCurrentLocation() async {
+    Position position = await determinePosition();
+    setState(() {
+      myPosition = LatLng(position.latitude, position.longitude);
+    });
+  }
+
+  @override
+  void initState() {
+    getCurrentLocation();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,36 +79,38 @@ class MapState extends State<Map> {
           ),
         ),
       ),
-      body: FlutterMap(
-        options: const MapOptions(
-          initialCenter: myPosition,
-          minZoom: 5,
-          maxZoom: 25,
-          initialZoom: 18,
-        ),
-        children: [
-          TileLayer(
-            urlTemplate:
-                'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-            additionalOptions: const {
-              'accessToken': MAPBOX_ACCESS_TOKEN,
-              'id': 'mapbox/streets-v12',
-            },
-          ),
-          const MarkerLayer(markers: [
-            Marker(
-              width: 80.0,
-              height: 80.0,
-              point: myPosition,
-              child: Icon(
-                Icons.location_pin,
-                size: 40,
-                color: Color.fromARGB(255, 230, 31, 17),
+      body: myPosition == null
+          ? CircularProgressIndicator()
+          : FlutterMap(
+              options: MapOptions(
+                initialCenter: myPosition!,
+                minZoom: 5,
+                maxZoom: 25,
+                initialZoom: 18,
               ),
+              children: [
+                TileLayer(
+                  urlTemplate:
+                      'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
+                  additionalOptions: const {
+                    'accessToken': MAPBOX_ACCESS_TOKEN,
+                    'id': 'mapbox/streets-v12',
+                  },
+                ),
+                MarkerLayer(markers: [
+                  Marker(
+                    width: 80.0,
+                    height: 80.0,
+                    point: myPosition!,
+                    child: Icon(
+                      Icons.location_pin,
+                      size: 40,
+                      color: Color.fromARGB(255, 230, 31, 17),
+                    ),
+                  ),
+                ]),
+              ],
             ),
-          ]),
-        ],
-      ),
     );
   }
 }
