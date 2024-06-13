@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_route_front/home_page.dart';
-import 'package:share_your_route_front/register_page.dart';
+import 'package:share_your_route_front/login_page.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
-      home: const Login(),
+      home: const Register(),
     );
   }
 }
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<Login> createState() => LoginState();
+  State<Register> createState() => RegisterState();
 }
 
-class LoginState extends State<Login> {
+class RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +50,35 @@ class LoginState extends State<Login> {
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Email',
+                      labelText: 'Nombres',
+                      hintText: 'Elliot Sam',
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 15.0,
+                    right: 15.0,
+                    top: 15,
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Apellidos',
+                      hintText: 'Alderson Sepiol',
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 15.0,
+                    right: 15.0,
+                    top: 15,
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Correo Electrónico',
                       hintText: 'samsepiol@example.com',
                     ),
                   ),
@@ -69,16 +97,25 @@ class LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    //TODO FORGOT PASSWORD SCREEN GOES HERE
-                  },
-                  child: const Text(
-                    'Olvidaste tu contraseña?',
-                    style: TextStyle(
-                      color: Color.fromRGBO(37, 60, 89, 1),
-                      fontSize: 15,
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 15.0,
+                    right: 15.0,
+                    top: 15,
+                  ),
+                  child: TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Confirmar contraseña',
                     ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 15.0,
+                    right: 15.0,
+                    top: 15,
                   ),
                 ),
                 Container(
@@ -96,7 +133,7 @@ class LoginState extends State<Login> {
                       );
                     },
                     child: const Text(
-                      'Iniciar sesión',
+                      'Crear cuenta',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
@@ -107,14 +144,13 @@ class LoginState extends State<Login> {
                 const SizedBox(height: 130),
                 TextButton(
                   onPressed: () {
-                    //TODO Change to register page
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const RegisterPage()),
+                      MaterialPageRoute(builder: (_) => const LoginPage()),
                     );
                   },
                   child: const Text(
-                    'Usuario nuevo? Crea una cuenta',
+                    'Ya tienes una cuenta? Inicia sesión aquí',
                     style: TextStyle(
                       color: Color.fromRGBO(37, 60, 89, 1),
                       fontSize: 15,
