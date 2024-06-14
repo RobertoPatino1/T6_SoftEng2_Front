@@ -296,7 +296,7 @@ class RegisterState extends State<Register> {
                         'Crear cuenta',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 25,
+                          fontSize: 20,
                         ),
                       ),
                     ),
