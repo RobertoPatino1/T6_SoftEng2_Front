@@ -242,9 +242,6 @@ class RegisterState extends State<Register> {
                         if (value == null || value.isEmpty) {
                           return 'Por favor confirme su contraseña';
                         }
-                        if (value != passwordController.text) {
-                          return 'Las contraseñas no son iguales';
-                        }
                         return null;
                       },
                     ),
