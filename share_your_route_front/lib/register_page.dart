@@ -261,7 +261,7 @@ class RegisterState extends State<Register> {
                               ),
                               child: Text(
                                 errorMessage,
-                                style: TextStyle(color: Colors.red),
+                                style: const TextStyle(color: Colors.red),
                               ),
                             )
                           : Container();
