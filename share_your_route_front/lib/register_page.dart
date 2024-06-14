@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_route_front/home_page.dart';
 import 'package:share_your_route_front/login_page.dart';
+import 'package:password_strength_checker/password_strength_checker.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -22,6 +23,32 @@ class Register extends StatefulWidget {
 }
 
 class RegisterState extends State<Register> {
+  final _formKey = GlobalKey<FormState>();
+  final passNotifier = ValueNotifier<PasswordStrength?>(null);
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final confirmPassNotifier = ValueNotifier<String?>(null);
+  bool showPasswordStrength = false;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    passNotifier.dispose();
+    confirmPassNotifier.dispose();
+    super.dispose();
+  }
+
+  void _validateConfirmPassword() {
+    if (passwordController.text != confirmPasswordController.text) {
+      confirmPassNotifier.value = 'Las contraseñas no son iguales';
+    } else {
+      confirmPassNotifier.value = null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,134 +57,268 @@ class RegisterState extends State<Register> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 60.0),
-                  child: Center(
-                    // ignore: sized_box_for_whitespace
-                    child: Container(
-                      width: 200,
-                      height: 150,
-                      child: Image.asset('asset/images/logo.png'),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Nombres',
-                      hintText: 'Elliot Sam',
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    left: 15.0,
-                    right: 15.0,
-                    top: 15,
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Apellidos',
-                      hintText: 'Alderson Sepiol',
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    left: 15.0,
-                    right: 15.0,
-                    top: 15,
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Correo Electrónico',
-                      hintText: 'samsepiol@example.com',
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    left: 15.0,
-                    right: 15.0,
-                    top: 15,
-                  ),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Contraseña',
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    left: 15.0,
-                    right: 15.0,
-                    top: 15,
-                  ),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Confirmar contraseña',
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    left: 15.0,
-                    right: 15.0,
-                    top: 15,
-                  ),
-                ),
-                Container(
-                  height: 50,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(37, 60, 89, 1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const HomePage()),
-                      );
-                    },
-                    child: const Text(
-                      'Crear cuenta',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 60.0),
+                    child: Center(
+                      child: Container(
+                        width: 200,
+                        height: 150,
+                        child: Image.asset('asset/images/logo.png'),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 130),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const LoginPage()),
-                    );
-                  },
-                  child: const Text(
-                    'Ya tienes una cuenta? Inicia sesión aquí',
-                    style: TextStyle(
-                      color: Color.fromRGBO(37, 60, 89, 1),
-                      fontSize: 15,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Nombres',
+                        hintText: 'Elliot Sam',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor ingrese sus nombres';
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      right: 15.0,
+                      top: 15,
+                    ),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Apellidos',
+                        hintText: 'Alderson Sepiol',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor ingrese sus apellidos';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      right: 15.0,
+                      top: 15,
+                    ),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Email',
+                        hintText: 'samsepiol@example.com',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor ingrese su email';
+                        }
+                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          return 'Por favor ingrese un email válido';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      right: 15.0,
+                      top: 15,
+                    ),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Nombre de usuario',
+                        hintText: 'mr_robot007',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor ingrese su nombre de usuario';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      right: 15.0,
+                      top: 15,
+                    ),
+                    child: TextFormField(
+                      controller: passwordController,
+                      obscureText: _obscurePassword,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: 'Contraseña',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                        ),
+                      ),
+                      onChanged: (value) {
+                        passNotifier.value =
+                            PasswordStrength.calculate(text: value);
+                        _validateConfirmPassword();
+                        setState(() {
+                          showPasswordStrength = value.isNotEmpty;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor ingrese su contraseña';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Visibility(
+                    visible: showPasswordStrength,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15.0,
+                        right: 15.0,
+                        top: 15,
+                      ),
+                      child: PasswordStrengthChecker(
+                        strength: passNotifier,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      right: 15.0,
+                      top: 15,
+                    ),
+                    child: TextFormField(
+                      controller: confirmPasswordController,
+                      obscureText: _obscureConfirmPassword,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: 'Confirmar contraseña',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureConfirmPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword;
+                            });
+                          },
+                        ),
+                      ),
+                      onChanged: (value) {
+                        _validateConfirmPassword();
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor confirme su contraseña';
+                        }
+                        if (value != passwordController.text) {
+                          return 'Las contraseñas no son iguales';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  ValueListenableBuilder<String?>(
+                    valueListenable: confirmPassNotifier,
+                    builder: (context, errorMessage, child) {
+                      return errorMessage != null
+                          ? Padding(
+                              padding: const EdgeInsets.only(
+                                left: 15.0,
+                                right: 15.0,
+                                top: 5,
+                              ),
+                              child: Text(
+                                errorMessage,
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            )
+                          : Container();
+                    },
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 15.0,
+                      right: 15.0,
+                      top: 15,
+                    ),
+                  ),
+                  Container(
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(37, 60, 89, 1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate() &&
+                            passwordController.text ==
+                                confirmPasswordController.text) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => const HomePage()),
+                          );
+                        }
+                      },
+                      child: const Text(
+                        'Crear cuenta',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 130),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const LoginPage()),
+                      );
+                    },
+                    child: const Text(
+                      'Ya tienes una cuenta? Inicia sesión aquí',
+                      style: TextStyle(
+                        color: Color.fromRGBO(37, 60, 89, 1),
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

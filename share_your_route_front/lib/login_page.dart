@@ -50,8 +50,7 @@ class LoginState extends State<Login> {
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      hintText: 'samsepiol@example.com',
+                      labelText: 'Nombre de usuario o Email',
                     ),
                   ),
                 ),
