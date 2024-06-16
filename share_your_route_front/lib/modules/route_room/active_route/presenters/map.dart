@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:share_your_route_front/classes/tourist_route.dart';
+import 'package:share_your_route_front/models/tourist_route.dart';
 
 const MAPBOX_ACCESS_TOKEN =
     'sk.eyJ1IjoiZ2phcmV2YWwiLCJhIjoiY2x4MThna3hzMDhqZDJxcTdjaXFxc29vaSJ9.xP7hhukr96mBVQ6aakeAFg';
@@ -80,7 +80,7 @@ class MapState extends State<Map> {
         ),
       ),
       body: myPosition == null
-          ? CircularProgressIndicator()
+          ? Center(child: CircularProgressIndicator())
           : FlutterMap(
               options: MapOptions(
                 initialCenter: myPosition!,

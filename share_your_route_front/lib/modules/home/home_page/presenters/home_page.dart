@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:share_your_route_front/classes/place.dart';
-import 'package:share_your_route_front/classes/tourist_route.dart';
-import 'package:share_your_route_front/createRoute2.dart';
-import 'package:share_your_route_front/enums/route_type.dart';
-import 'package:share_your_route_front/route_itinerary_page.dart';
-import 'package:share_your_route_front/route_type_helper.dart';
+import 'package:share_your_route_front/models/place.dart';
+import 'package:share_your_route_front/models/tourist_route.dart';
+import 'package:share_your_route_front/modules/home/route_creation.dart/presenters/createRoute2.dart';
+import 'package:share_your_route_front/core/constants/route_type.dart';
+import 'package:share_your_route_front/modules/route_room/route_preview/presenters/route_preview_page.dart';
+import 'package:share_your_route_front/modules/shared/helpers/route_type_helper.dart';
 
 //Listas de prueba
 List<Map<Place, DateTime>> places = [
@@ -167,10 +167,17 @@ class HomeState extends State<Home> {
                               style: const TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold))),
                       Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          child: Text(touristRoute.description,
-                              style: const TextStyle(fontSize: 10))),
+                        height: 20,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 2),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Text(
+                            touristRoute.description,
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        ),
+                      ),
                       Container(
                           margin: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(

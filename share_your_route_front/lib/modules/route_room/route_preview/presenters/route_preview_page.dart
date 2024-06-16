@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:share_your_route_front/classes/place.dart';
-import 'package:share_your_route_front/classes/tourist_route.dart';
-import 'package:share_your_route_front/map.dart';
-import 'package:share_your_route_front/route_type_helper.dart';
+import 'package:share_your_route_front/models/place.dart';
+import 'package:share_your_route_front/models/tourist_route.dart';
+import 'package:share_your_route_front/modules/route_room/active_route/presenters/map.dart';
+import 'package:share_your_route_front/modules/shared/helpers/route_type_helper.dart';
 
 class RouteItineraryPage extends StatelessWidget {
   final TouristRoute touristRoute;

@@ -1,5 +1,5 @@
-import 'package:share_your_route_front/classes/place.dart';
-import 'package:share_your_route_front/enums/route_type.dart';
+import 'package:share_your_route_front/models/place.dart';
+import 'package:share_your_route_front/core/constants/route_type.dart';
 
 class TouristRoute {
   final String name;

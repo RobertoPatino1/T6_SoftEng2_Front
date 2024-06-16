@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:share_your_route_front/login_page.dart';
+import 'package:share_your_route_front/modules/auth/login/presenters/login_page.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
             Text('Cargando...'),
           ],
         ),
-      ), 
+      ),
     );
   }
 }

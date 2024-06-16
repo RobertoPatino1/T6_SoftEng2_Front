@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share_your_route_front/enums/route_type.dart';
+import 'package:share_your_route_front/core/constants/route_type.dart';
 
 class RouteTypeHelper {
   static IconData getIconData(RouteType icon) {

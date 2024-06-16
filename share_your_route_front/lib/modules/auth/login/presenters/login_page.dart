@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:share_your_route_front/home_page.dart';
-import 'package:share_your_route_front/register_page.dart';
+import 'package:share_your_route_front/modules/home/home_page/presenters/home_page.dart';
+import 'package:share_your_route_front/modules/auth/register/presenters/register_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

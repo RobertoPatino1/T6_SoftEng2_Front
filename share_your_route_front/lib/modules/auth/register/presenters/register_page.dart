@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:share_your_route_front/home_page.dart';
-import 'package:share_your_route_front/login_page.dart';
+import 'package:share_your_route_front/core/constants/app_regex.dart';
+import 'package:share_your_route_front/modules/home/home_page/presenters/home_page.dart';
+import 'package:share_your_route_front/modules/auth/login/presenters/login_page.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -125,7 +126,7 @@ class RegisterState extends State<Register> {
                         if (value == null || value.isEmpty) {
                           return 'Por favor ingrese su email';
                         }
-                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                        if (!AppRegex.emailRegex.hasMatch(value)) {
                           return 'Por favor ingrese un email válido';
                         }
                         return null;
