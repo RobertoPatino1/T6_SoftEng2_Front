@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:share_your_route_front/models/place.dart';
 import 'package:share_your_route_front/models/tourist_route.dart';
@@ -99,13 +100,8 @@ class HomeState extends State<Home> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => RouteItineraryPage(
-                              touristRoute: touristRoute,
-                            )),
-                  );
+                  Modular.to
+                      .pushNamed('/auth/home/room/', arguments: touristRoute);
                 },
                 child: Container(
                   width: 160,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:share_your_route_front/core/constants/app_regex.dart';
 import 'package:share_your_route_front/modules/home/home_page/presenters/home_page.dart';
 import 'package:share_your_route_front/modules/auth/login/presenters/login_page.dart';
@@ -284,10 +285,7 @@ class RegisterState extends State<Register> {
                         if (_formKey.currentState!.validate() &&
                             passwordController.text ==
                                 confirmPasswordController.text) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const HomePage()),
-                          );
+                          Modular.to.pushNamed('/auth/home');
                         }
                       },
                       child: const Text(
@@ -302,10 +300,7 @@ class RegisterState extends State<Register> {
                   const SizedBox(height: 130),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const LoginPage()),
-                      );
+                      Modular.to.navigate('/auth/');
                     },
                     child: const Text(
                       'Ya tienes una cuenta? Inicia sesión aquí',

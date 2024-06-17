@@ -1,12 +1,10 @@
 // ignore_for_file: use_super_parameters, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:share_your_route_front/models/place.dart';
 import 'package:share_your_route_front/models/tourist_route.dart';
-import 'package:share_your_route_front/modules/route_room/active_route/presenters/map.dart';
 import 'package:share_your_route_front/modules/shared/helpers/route_type_helper.dart';
 
 class RouteItineraryPage extends StatelessWidget {
@@ -22,7 +20,7 @@ class RouteItineraryPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Modular.to.pushNamed('/auth/home/');
           },
         ),
         title: Text(touristRoute.name,
@@ -119,11 +117,8 @@ class RouteItineraryPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => MapPage(touristRoute: touristRoute)),
-                    );
+                    Modular.to.pushNamed('/auth/home/room/active',
+                        arguments: touristRoute);
                   },
                   child: const Text(
                     'Empezar Ruta',

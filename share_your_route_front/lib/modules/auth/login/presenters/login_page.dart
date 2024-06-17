@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:share_your_route_front/modules/home/home_page/presenters/home_page.dart';
 import 'package:share_your_route_front/modules/auth/register/presenters/register_page.dart';
 
@@ -89,10 +90,7 @@ class LoginState extends State<Login> {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const HomePage()),
-                      );
+                      Modular.to.pushNamed('/auth/home/');
                     },
                     child: const Text(
                       'Iniciar sesión',
@@ -106,11 +104,7 @@ class LoginState extends State<Login> {
                 const SizedBox(height: 130),
                 TextButton(
                   onPressed: () {
-                    //TODO Change to register page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const RegisterPage()),
-                    );
+                    Modular.to.pushNamed('/auth/register');
                   },
                   child: const Text(
                     'Usuario nuevo? Crea una cuenta',

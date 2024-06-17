@@ -42,6 +42,9 @@ dependencies:
   latlong2: ^0.9.1
   geolocator: ^12.0.0
   password_strength_checker: ^1.2.3
+  flutter_modular: ^6.3.4
+  provider: ^6.1.2
+  flutter_riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:

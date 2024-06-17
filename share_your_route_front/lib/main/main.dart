@@ -3,12 +3,36 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:share_your_route_front/modules/auth/auth_module.dart';
 import 'package:share_your_route_front/modules/auth/login/presenters/login_page.dart';
 
-void main() => runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainPage(),
-    ));
+void main() {
+  return runApp(ProviderScope(
+      child: ModularApp(module: AppModule(), child: AppWidget())));
+}
+
+class AppWidget extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: 'Share your route',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      routerConfig: Modular.routerConfig,
+    ); //added by extension
+  }
+}
+
+class AppModule extends Module {
+  @override
+  void binds(i) {}
+
+  @override
+  void routes(r) {
+    r.child('/', child: (context) => MainPage());
+    r.module('/auth', module: AuthModule());
+  }
+}
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -22,10 +46,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
+      Modular.to.navigate('/auth/');
     });
   }
 
