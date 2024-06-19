@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_your_route_front/modules/auth/auth_module.dart';
-import 'package:share_your_route_front/modules/auth/login/presenters/login_page.dart';
+import 'package:share_your_route_front/modules/shared/themes/global_theme_data.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: "lib/core/configs/.env");
   return runApp(ProviderScope(
       child: ModularApp(module: AppModule(), child: AppWidget())));
 }
@@ -17,7 +19,8 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Share your route',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      themeMode: ThemeMode.light,
+      theme: GlobalThemData.lightThemeData,
       routerConfig: Modular.routerConfig,
     ); //added by extension
   }
@@ -53,7 +56,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +71,8 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             ),
-            CircularProgressIndicator(color: Color.fromRGBO(37, 60, 89, 1)),
+            CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.primary),
             SizedBox(height: 20),
             Text('Cargando...'),
           ],

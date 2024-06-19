@@ -14,19 +14,15 @@ class RouteItineraryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Modular.to.pushNamed('/auth/home/');
+            Modular.to.pop();
           },
         ),
         title: Text(touristRoute.name,
-            style: const TextStyle(
-                color: Color.fromRGBO(37, 60, 89, 1),
-                fontWeight: FontWeight.bold)),
+            style: Theme.of(context).textTheme.headlineLarge),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -63,13 +59,8 @@ class RouteItineraryPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Itinerario de rutas',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(37, 60, 89, 1)),
-              ),
+              Text('Itinerario de rutas',
+                  style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 10),
               // ignore: sized_box_for_whitespace
               Container(
@@ -96,13 +87,8 @@ class RouteItineraryPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Center(
-                child: Text(
-                  DateFormat('d-m-y').format(touristRoute.startTime),
-                  style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(37, 60, 89, 1)),
-                ),
+                child: Text(DateFormat('d-m-y').format(touristRoute.startTime),
+                    style: Theme.of(context).textTheme.headlineSmall),
               ),
               const SizedBox(height: 16),
               const SizedBox(height: 20),

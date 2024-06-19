@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:share_your_route_front/core/constants/app_regex.dart';
-import 'package:share_your_route_front/modules/home/home_page/presenters/home_page.dart';
-import 'package:share_your_route_front/modules/auth/login/presenters/login_page.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -10,10 +8,7 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: const Register(),
-    );
+    return const Register();
   }
 }
 
@@ -54,7 +49,6 @@ class RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -260,7 +254,8 @@ class RegisterState extends State<Register> {
                               ),
                               child: Text(
                                 errorMessage,
-                                style: const TextStyle(color: Colors.red),
+                                style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error),
                               ),
                             )
                           : Container();
@@ -302,12 +297,9 @@ class RegisterState extends State<Register> {
                     onPressed: () {
                       Modular.to.navigate('/auth/');
                     },
-                    child: const Text(
+                    child: Text(
                       'Ya tienes una cuenta? Inicia sesión aquí',
-                      style: TextStyle(
-                        color: Color.fromRGBO(37, 60, 89, 1),
-                        fontSize: 15,
-                      ),
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
                 ],

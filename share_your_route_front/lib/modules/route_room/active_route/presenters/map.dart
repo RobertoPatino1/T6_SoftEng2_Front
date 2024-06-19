@@ -1,14 +1,12 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_your_route_front/models/tourist_route.dart';
-
-const MAPBOX_ACCESS_TOKEN =
-    'sk.eyJ1IjoiZ2phcmV2YWwiLCJhIjoiY2x4MThna3hzMDhqZDJxcTdjaXFxc29vaSJ9.xP7hhukr96mBVQ6aakeAFg';
 
 class MapPage extends StatelessWidget {
   final TouristRoute touristRoute;
@@ -16,10 +14,7 @@ class MapPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: Map(touristRoute: touristRoute),
-    );
+    return Map(touristRoute: touristRoute);
   }
 }
 
@@ -63,21 +58,19 @@ class MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+        child: Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Modular.to.pushNamed('/auth/home/');
+            Modular.to.pop();
+            Modular.to.pop();
           },
         ),
         title: Text(
           widget.touristRoute.name,
-          style: const TextStyle(
-            color: Color.fromRGBO(37, 60, 89, 1),
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
       ),
       body: myPosition == null
@@ -93,8 +86,8 @@ class MapState extends State<Map> {
                 TileLayer(
                   urlTemplate:
                       'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-                  additionalOptions: const {
-                    'accessToken': MAPBOX_ACCESS_TOKEN,
+                  additionalOptions: {
+                    'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? "",
                     'id': 'mapbox/streets-v12',
                   },
                 ),
@@ -112,6 +105,6 @@ class MapState extends State<Map> {
                 ]),
               ],
             ),
-    );
+    ));
   }
 }

@@ -1,79 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:intl/intl.dart';
-import 'package:share_your_route_front/models/place.dart';
-import 'package:share_your_route_front/models/tourist_route.dart';
+import 'package:share_your_route_front/core/utils/jsonConverters/tourist_route_json_converter.dart';
 import 'package:share_your_route_front/modules/home/route_creation.dart/presenters/createRoute2.dart';
-import 'package:share_your_route_front/core/constants/route_type.dart';
-import 'package:share_your_route_front/modules/route_room/route_preview/presenters/route_preview_page.dart';
-import 'package:share_your_route_front/modules/shared/helpers/route_type_helper.dart';
-
-//Listas de prueba
-List<Map<Place, DateTime>> places = [
-  {Place(name: "Lugar1", entryPrice: 0.0): DateTime(2023, 6, 9, 10, 30)},
-  {Place(name: "Lugar2", entryPrice: 0.0): DateTime(2023, 6, 9, 11, 00)},
-  {Place(name: "Lugar3", entryPrice: 0.0): DateTime(2023, 6, 9, 11, 30)},
-  {Place(name: "Lugar4", entryPrice: 0.0): DateTime(2023, 6, 9, 12, 00)},
-  {Place(name: "Lugar5", entryPrice: 0.0): DateTime(2023, 6, 9, 12, 15)}
-];
-
-List<TouristRoute> publicRoutes = [
-  TouristRoute(
-      name: "Centro artístico",
-      placesList: places,
-      startTime: DateTime(2023, 6, 9, 10, 30),
-      endTime: DateTime(2023, 6, 9, 12, 30),
-      image: "centro_artistico",
-      description: "Descubre las maravillas artísticas",
-      hasStarted: false,
-      routeType: [RouteType.culture, RouteType.city]),
-  TouristRoute(
-      name: "Fauna silvestre",
-      placesList: places,
-      startTime: DateTime(2023, 6, 9, 10, 30),
-      endTime: DateTime(2023, 6, 9, 12, 30),
-      image: "fauna_silvestre",
-      description: "Descubre la fauna del lugar",
-      hasStarted: false,
-      routeType: [RouteType.nature]),
-  TouristRoute(
-      name: "Ruta gastronómica",
-      image: "ruta_gastronomica",
-      placesList: places,
-      startTime: DateTime(2023, 6, 9, 10, 30),
-      endTime: DateTime(2023, 6, 9, 12, 30),
-      description: "Encuentra los mejores platos típicos",
-      hasStarted: false,
-      routeType: [RouteType.gastronomic, RouteType.city]),
-];
-
-List<TouristRoute> privateRoutes = [
-  TouristRoute(
-      name: "Tarde con amigos",
-      placesList: places,
-      startTime: DateTime(2023, 6, 9, 10, 30),
-      endTime: DateTime(2023, 6, 9, 12, 30),
-      image: "no_image",
-      description: "Paseo privado con amigos",
-      hasStarted: false,
-      routeType: [RouteType.gastronomic, RouteType.adventure, RouteType.city]),
-];
-
-String formatDuration(Duration duration) {
-  int hours = duration.inHours;
-  int minutes = duration.inMinutes.remainder(60);
-  return '$hours horas y $minutes minutos';
-}
+import 'package:share_your_route_front/modules/shared/builders/route_card_builder.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: const Home(),
-    );
+    return const Home();
   }
 }
 
@@ -86,117 +21,10 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   int currentPageIndex = 0;
-
-  Widget buildRouteCard(BuildContext context, List<TouristRoute> routesList) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: routesList.length,
-      itemBuilder: (context, index) {
-        TouristRoute touristRoute = routesList[index];
-
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Modular.to
-                      .pushNamed('/auth/home/room/', arguments: touristRoute);
-                },
-                child: Container(
-                  width: 160,
-                  margin: const EdgeInsets.only(top: 12, bottom: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Container(
-                            width: 160,
-                            height: 80,
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20)),
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      "asset/images/${touristRoute.image}.jpg"),
-                                  fit: BoxFit.cover,
-                                ))),
-                      ),
-                      Center(
-                          child: Text(touristRoute.name,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: Color.fromRGBO(37, 60, 89, 1)))),
-                      Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: touristRoute.routeType.map((routeType) {
-                            return Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Icon(
-                                RouteTypeHelper.getIconData(routeType),
-                                size: 20.0,
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          child: Text(
-                              "${DateFormat('HH:mm').format(touristRoute.startTime)}H",
-                              style: const TextStyle(
-                                  fontSize: 8, fontWeight: FontWeight.bold))),
-                      Container(
-                        height: 20,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 2),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Text(
-                            touristRoute.description,
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                        ),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Text(
-                              formatDuration(touristRoute.endTime
-                                  .difference(touristRoute.startTime)),
-                              style: const TextStyle(
-                                  fontSize: 8, fontWeight: FontWeight.bold)))
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
       bottomNavigationBar: NavigationBar(
         height: 60,
         onDestinationSelected: (int index) {
@@ -205,14 +33,13 @@ class HomeState extends State<Home> {
           });
         },
         indicatorColor: const Color.fromRGBO(37, 60, 89, 0),
-        backgroundColor: Colors.white,
         selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
+        destinations: <Widget>[
           NavigationDestination(
             selectedIcon: Icon(
               Icons.explore,
               size: 20,
-              color: Color.fromRGBO(37, 60, 89, 1),
+              color: theme.colorScheme.primary,
             ),
             icon: Icon(
               Icons.explore_outlined,
@@ -223,14 +50,14 @@ class HomeState extends State<Home> {
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.notifications,
-                size: 20, color: Color.fromRGBO(37, 60, 89, 1)),
+                size: 20, color: theme.colorScheme.primary),
             icon: Icon(Icons.notifications_outlined,
                 size: 20, color: Colors.grey),
             label: 'Notificaciones',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.person,
-                size: 20, color: Color.fromRGBO(37, 60, 89, 1)),
+            selectedIcon:
+                Icon(Icons.person, size: 20, color: theme.colorScheme.primary),
             icon: Icon(Icons.person, size: 20, color: Colors.grey),
             label: 'Perfil',
           ),
@@ -246,23 +73,15 @@ class HomeState extends State<Home> {
               Container(
                 margin: const EdgeInsets.only(
                     top: 50, bottom: 10, left: 10, right: 10),
-                child: const Text(
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        fontSize: 25.0,
-                        color: Color.fromRGBO(45, 75, 115, 1),
-                        fontWeight: FontWeight.bold,
-                        height: 1),
+                child: Text(
+                    style: Theme.of(context).textTheme.headlineLarge,
                     "Empecemos una aventura!"),
               ),
               Container(
                 margin: const EdgeInsets.all(5),
-                child: const Text(
+                child: Text(
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color.fromRGBO(45, 75, 115, 1),
-                        fontWeight: FontWeight.normal),
+                    style: Theme.of(context).textTheme.headlineSmall,
                     "¿Deseas crear una ruta?"),
               ),
               Container(
@@ -303,29 +122,25 @@ class HomeState extends State<Home> {
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.only(left: 10, right: 20),
-                child: const Text(
+                child: Text(
                     textAlign: TextAlign.left,
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color.fromRGBO(45, 75, 115, 1),
-                        fontWeight: FontWeight.bold,
-                        height: 1),
+                    style: Theme.of(context).textTheme.headlineMedium,
                     "Rutas privadas"),
               ),
-              Expanded(child: buildRouteCard(context, privateRoutes)),
+              Expanded(
+                  child: RouteCardBuilder().buildRouteCard(
+                      context, listFromJson(getPrivateRoutes()))),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.only(bottom: 10, left: 10, right: 20),
-                child: const Text(
+                child: Text(
                     textAlign: TextAlign.left,
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color.fromRGBO(45, 75, 115, 1),
-                        fontWeight: FontWeight.bold,
-                        height: 1),
+                    style: Theme.of(context).textTheme.headlineMedium,
                     "Rutas públicas"),
               ),
-              Expanded(child: buildRouteCard(context, publicRoutes)),
+              Expanded(
+                  child: RouteCardBuilder().buildRouteCard(
+                      context, listFromJson(getPublicRoutes()))),
             ],
           ),
 

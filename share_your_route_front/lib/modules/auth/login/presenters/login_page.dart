@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:share_your_route_front/modules/home/home_page/presenters/home_page.dart';
-import 'package:share_your_route_front/modules/auth/register/presenters/register_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: const Login(),
-    );
+    return const Login();
   }
 }
 
@@ -26,7 +21,6 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -73,12 +67,9 @@ class LoginState extends State<Login> {
                   onPressed: () {
                     //TODO FORGOT PASSWORD SCREEN GOES HERE
                   },
-                  child: const Text(
+                  child: Text(
                     'Olvidaste tu contraseña?',
-                    style: TextStyle(
-                      color: Color.fromRGBO(37, 60, 89, 1),
-                      fontSize: 15,
-                    ),
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
                 Container(
@@ -106,12 +97,9 @@ class LoginState extends State<Login> {
                   onPressed: () {
                     Modular.to.pushNamed('/auth/register');
                   },
-                  child: const Text(
+                  child: Text(
                     'Usuario nuevo? Crea una cuenta',
-                    style: TextStyle(
-                      color: Color.fromRGBO(37, 60, 89, 1),
-                      fontSize: 15,
-                    ),
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
               ],
