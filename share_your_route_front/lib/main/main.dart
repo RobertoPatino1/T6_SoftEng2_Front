@@ -1,21 +1,24 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, library_private_types_in_public_api
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_your_route_front/modules/auth/auth_module.dart';
 import 'package:share_your_route_front/modules/shared/themes/global_theme_data.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future main() async {
   await dotenv.load(fileName: "lib/core/configs/.env");
-  return runApp(ProviderScope(
-      child: ModularApp(module: AppModule(), child: AppWidget())));
+  return runApp(
+    ProviderScope(
+      child: ModularApp(module: AppModule(), child: AppWidget()),
+    ),
+  );
 }
 
 class AppWidget extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Share your route',
@@ -28,10 +31,10 @@ class AppWidget extends StatelessWidget {
 
 class AppModule extends Module {
   @override
-  void binds(i) {}
+  void binds(Injector i) {}
 
   @override
-  void routes(r) {
+  void routes(RouteManager r) {
     r.child('/', child: (context) => MainPage());
     r.module('/auth', module: AuthModule());
   }
@@ -72,7 +75,8 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             CircularProgressIndicator(
-                color: Theme.of(context).colorScheme.primary),
+              color: Theme.of(context).colorScheme.primary,
+            ),
             SizedBox(height: 20),
             Text('Cargando...'),
           ],

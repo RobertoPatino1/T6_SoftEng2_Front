@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CreateRoute2 extends StatefulWidget {
-  const CreateRoute2({Key? key}) : super(key: key);
+  const CreateRoute2({super.key});
 
   @override
   State<CreateRoute2> createState() => _CreateRoute2State();
@@ -14,7 +14,7 @@ class _CreateRoute2State extends State<CreateRoute2> {
   String alertSound = 'Sonido 1';
   bool makeItPublic = false;
 
-  TextStyle labelTextStyle = TextStyle(
+  TextStyle labelTextStyle = const TextStyle(
     fontSize: 16, // Adjusted size to match other labels
     color: Color.fromRGBO(37, 60, 89, 1), // Color set to dark blue
   );
@@ -28,13 +28,23 @@ class _CreateRoute2State extends State<CreateRoute2> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Ruta: Mi Ruta De Cuenca', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(37, 60, 89, 1))),
-              SizedBox(height: 20),
+              const Text(
+                'Ruta: Mi Ruta De Cuenca',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(37, 60, 89, 1),
+                ),
+              ),
+              const SizedBox(height: 20),
               buildLabeledControl('Cantidad de Personas', buildNumberChanger()),
               buildLabeledControl('Rango de Alerta', buildNumberChanger()),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: Text('Mostrar información del lugar', style: labelTextStyle),
+                title: Text(
+                  'Mostrar información del lugar',
+                  style: labelTextStyle,
+                ),
                 value: showPlaceInfo,
                 onChanged: (bool value) {
                   setState(() {
@@ -54,26 +64,38 @@ class _CreateRoute2State extends State<CreateRoute2> {
                 },
               ),
               ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                leading: Icon(Icons.location_pin, color: Color.fromRGBO(37, 60, 89, 1)),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                leading: const Icon(
+                  Icons.location_pin,
+                  color: Color.fromRGBO(37, 60, 89, 1),
+                ),
                 title: Text('Fijar punto de encuentro', style: labelTextStyle),
                 trailing: IconButton(
-                  icon: Icon(Icons.add, color: Color.fromRGBO(37, 60, 89, 1)),
+                  icon: const Icon(
+                    Icons.add,
+                    color: Color.fromRGBO(37, 60, 89, 1),
+                  ),
                   onPressed: () {},
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(37, 60, 89, 1),
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    backgroundColor: const Color.fromRGBO(37, 60, 89, 1),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 50,
+                      vertical: 15,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: Text('Crear', style: TextStyle(color: Colors.white, fontSize: 18)),
+                  child: const Text(
+                    'Crear',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
                 ),
               ),
             ],
@@ -97,7 +119,7 @@ class _CreateRoute2State extends State<CreateRoute2> {
     return Row(
       children: [
         IconButton(
-          icon: Icon(Icons.remove, color: Color.fromRGBO(37, 60, 89, 1)),
+          icon: const Icon(Icons.remove, color: Color.fromRGBO(37, 60, 89, 1)),
           onPressed: () {
             setState(() {
               if (numberOfPeople > 1) numberOfPeople--;
@@ -106,7 +128,7 @@ class _CreateRoute2State extends State<CreateRoute2> {
         ),
         Text('$numberOfPeople', style: labelTextStyle),
         IconButton(
-          icon: Icon(Icons.add, color: Color.fromRGBO(37, 60, 89, 1)),
+          icon: const Icon(Icons.add, color: Color.fromRGBO(37, 60, 89, 1)),
           onPressed: () {
             setState(() {
               numberOfPeople++;

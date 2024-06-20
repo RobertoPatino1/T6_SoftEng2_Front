@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:share_your_route_front/core/constants/app_regex.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
+import 'package:share_your_route_front/core/constants/app_regex.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -62,7 +62,7 @@ class RegisterState extends State<Register> {
                   Padding(
                     padding: const EdgeInsets.only(top: 60.0),
                     child: Center(
-                      child: Container(
+                      child: SizedBox(
                         width: 200,
                         height: 150,
                         child: Image.asset('asset/images/logo.png'),
@@ -255,7 +255,8 @@ class RegisterState extends State<Register> {
                               child: Text(
                                 errorMessage,
                                 style: TextStyle(
-                                    color: Theme.of(context).colorScheme.error),
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
                               ),
                             )
                           : Container();
@@ -268,28 +269,16 @@ class RegisterState extends State<Register> {
                       top: 15,
                     ),
                   ),
-                  Container(
-                    height: 50,
-                    width: 250,
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(37, 60, 89, 1),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate() &&
-                            passwordController.text ==
-                                confirmPasswordController.text) {
-                          Modular.to.pushNamed('/auth/home');
-                        }
-                      },
-                      child: const Text(
-                        'Crear cuenta',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
+                  OutlinedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate() &&
+                          passwordController.text ==
+                              confirmPasswordController.text) {
+                        Modular.to.pushNamed('/auth/home');
+                      }
+                    },
+                    child: const Text(
+                      'Crear cuenta',
                     ),
                   ),
                   const SizedBox(height: 130),
@@ -297,9 +286,8 @@ class RegisterState extends State<Register> {
                     onPressed: () {
                       Modular.to.navigate('/auth/');
                     },
-                    child: Text(
-                      'Ya tienes una cuenta? Inicia sesión aquí',
-                      style: Theme.of(context).textTheme.displayLarge,
+                    child: const Text(
+                      'Ya estás registrado? Inicia sesión aquí',
                     ),
                   ),
                 ],

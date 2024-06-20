@@ -5,9 +5,9 @@ import 'package:share_your_route_front/modules/route_room/route_room_module.dart
 
 class HomeModule extends Module {
   @override
-  void routes(r) {
-    r.child('/', child: (context) => HomePage());
-    r.child('/creation', child: (context) => CreateRoute2());
+  void routes(RouteManager r) {
+    r.child('/', child: (context) => const HomePage());
+    r.child('/creation', child: (context) => const CreateRoute2());
     r.module('/room', module: RouteRoomModule());
   }
 }

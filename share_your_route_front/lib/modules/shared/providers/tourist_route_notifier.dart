@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class TouristRouteNotifier extends StateNotifier<dynamic> {
   TouristRouteNotifier() : super(null);
 
+  // ignore: use_setters_to_change_properties
   void setTouristRoute(dynamic route) {
     state = route;
   }

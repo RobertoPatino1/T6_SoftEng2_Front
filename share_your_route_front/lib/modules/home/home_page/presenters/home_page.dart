@@ -41,7 +41,7 @@ class HomeState extends State<Home> {
               size: 20,
               color: theme.colorScheme.primary,
             ),
-            icon: Icon(
+            icon: const Icon(
               Icons.explore_outlined,
               size: 20,
               color: Colors.grey,
@@ -49,16 +49,22 @@ class HomeState extends State<Home> {
             label: 'Explorar',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.notifications,
-                size: 20, color: theme.colorScheme.primary),
-            icon: Icon(Icons.notifications_outlined,
-                size: 20, color: Colors.grey),
+            selectedIcon: Icon(
+              Icons.notifications,
+              size: 20,
+              color: theme.colorScheme.primary,
+            ),
+            icon: const Icon(
+              Icons.notifications_outlined,
+              size: 20,
+              color: Colors.grey,
+            ),
             label: 'Notificaciones',
           ),
           NavigationDestination(
             selectedIcon:
                 Icon(Icons.person, size: 20, color: theme.colorScheme.primary),
-            icon: Icon(Icons.person, size: 20, color: Colors.grey),
+            icon: const Icon(Icons.person, size: 20, color: Colors.grey),
             label: 'Perfil',
           ),
         ],
@@ -72,34 +78,35 @@ class HomeState extends State<Home> {
             children: <Widget>[
               Container(
                 margin: const EdgeInsets.only(
-                    top: 50, bottom: 10, left: 10, right: 10),
+                  top: 50,
+                  bottom: 10,
+                  left: 10,
+                  right: 10,
+                ),
                 child: Text(
-                    style: Theme.of(context).textTheme.headlineLarge,
-                    "Empecemos una aventura!"),
+                  style: Theme.of(context).textTheme.headlineLarge,
+                  "Empecemos una aventura!",
+                ),
               ),
               Container(
                 margin: const EdgeInsets.all(5),
                 child: Text(
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    "¿Deseas crear una ruta?"),
-              ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                height: 40,
-                width: 150,
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(45, 75, 115, 1),
-                  borderRadius: BorderRadius.circular(15),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  "¿Deseas crear una ruta?",
                 ),
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const CreateRoute2()),
-                      );
-                    },
-                    child: const Row(
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const CreateRoute2()),
+                  );
+                },
+                child: const IntrinsicWidth(
+                  child: Center(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           'Empezar una ruta',
@@ -117,30 +124,40 @@ class HomeState extends State<Home> {
                           size: 15,
                         ),
                       ],
-                    )),
+                    ),
+                  ),
+                ),
               ),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.only(left: 10, right: 20),
                 child: Text(
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    "Rutas privadas"),
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  "Rutas privadas",
+                ),
               ),
               Expanded(
-                  child: RouteCardBuilder().buildRouteCard(
-                      context, listFromJson(getPrivateRoutes()))),
+                child: RouteCardBuilder().buildRouteCard(
+                  context,
+                  listFromJson(getPrivateRoutes()),
+                ),
+              ),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.only(bottom: 10, left: 10, right: 20),
                 child: Text(
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    "Rutas públicas"),
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  "Rutas públicas",
+                ),
               ),
               Expanded(
-                  child: RouteCardBuilder().buildRouteCard(
-                      context, listFromJson(getPublicRoutes()))),
+                child: RouteCardBuilder().buildRouteCard(
+                  context,
+                  listFromJson(getPublicRoutes()),
+                ),
+              ),
             ],
           ),
 

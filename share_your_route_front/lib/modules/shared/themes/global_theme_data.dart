@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, deprecated_member_use, avoid_classes_with_only_static_members
+
 import 'package:flutter/material.dart';
 
 class GlobalThemData {
@@ -8,80 +10,133 @@ class GlobalThemData {
 
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
     return ThemeData(
-        colorScheme: colorScheme,
-        canvasColor: colorScheme.surface,
-        scaffoldBackgroundColor: colorScheme.surface,
-        highlightColor: Colors.transparent,
-        focusColor: focusColor,
-        textTheme: TextTheme(
-          headlineLarge: TextStyle(
-              fontSize: 25.0,
-              color: lightColorScheme.primary,
+      colorScheme: colorScheme,
+      canvasColor: colorScheme.surface,
+      scaffoldBackgroundColor: colorScheme.surface,
+      highlightColor: Colors.transparent,
+      focusColor: focusColor,
+      textTheme: TextTheme(
+        headlineLarge: TextStyle(
+          fontSize: 25.0,
+          color: lightColorScheme.primary,
+          fontWeight: FontWeight.bold,
+          height: 1,
+        ),
+        headlineMedium: TextStyle(
+          fontSize: 20.0,
+          color: lightColorScheme.primary,
+          fontWeight: FontWeight.bold,
+          height: 1,
+        ),
+        headlineSmall: TextStyle(
+          fontSize: 15.0,
+          color: lightColorScheme.primary,
+          fontWeight: FontWeight.bold,
+          height: 1,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 15.0,
+          color: Colors.black,
+          fontWeight: FontWeight.normal,
+          height: 1,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 10.0,
+          color: Colors.black,
+          fontWeight: FontWeight.normal,
+          height: 1,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 8.0,
+          color: Colors.black,
+          fontWeight: FontWeight.normal,
+          height: 1,
+        ),
+        labelLarge: TextStyle(
+          fontSize: 15.0,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          height: 1,
+        ),
+        labelMedium: TextStyle(
+          fontSize: 10.0,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          height: 1,
+        ),
+        labelSmall: TextStyle(
+          fontSize: 8.0,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          height: 1,
+        ),
+        displayLarge: TextStyle(
+          fontSize: 15.0,
+          color: lightColorScheme.secondary,
+          fontWeight: FontWeight.bold,
+          height: 1,
+        ),
+        displayMedium: TextStyle(
+          fontSize: 10.0,
+          color: lightColorScheme.secondary,
+          fontWeight: FontWeight.bold,
+          height: 1,
+        ),
+        displaySmall: TextStyle(
+          fontSize: 8.0,
+          color: lightColorScheme.secondary,
+          fontWeight: FontWeight.bold,
+          height: 1,
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor:
+              MaterialStateProperty.all<Color>(lightColorScheme.primary),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            TextStyle(
+              fontSize: 15.0,
               fontWeight: FontWeight.bold,
-              height: 1),
-          headlineMedium: TextStyle(
+              color: lightColorScheme.primary,
+            ),
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.all<Color>(lightColorScheme.primary),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            TextStyle(
+              fontSize: 15.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          minimumSize: MaterialStateProperty.all<Size>(
+            Size(150, 50),
+          ),
+          padding: MaterialStateProperty.all<EdgeInsets>(
+            EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          ),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.all<Color>(lightColorScheme.primary),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            TextStyle(
               fontSize: 20.0,
-              color: lightColorScheme.primary,
               fontWeight: FontWeight.bold,
-              height: 1),
-          headlineSmall: TextStyle(
-              fontSize: 15.0,
-              color: lightColorScheme.primary,
-              fontWeight: FontWeight.bold,
-              height: 1),
-          bodyLarge: TextStyle(
-              fontSize: 15.0,
-              color: Colors.black,
-              fontWeight: FontWeight.normal,
-              height: 1),
-          bodyMedium: TextStyle(
-              fontSize: 10.0,
-              color: Colors.black,
-              fontWeight: FontWeight.normal,
-              height: 1),
-          bodySmall: TextStyle(
-            fontSize: 8.0,
-            color: Colors.black,
-            fontWeight: FontWeight.normal,
-            height: 1,
+              color: Colors.white,
+            ),
           ),
-          labelLarge: TextStyle(
-            fontSize: 15.0,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            height: 1,
-          ),
-          labelMedium: TextStyle(
-            fontSize: 10.0,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            height: 1,
-          ),
-          labelSmall: TextStyle(
-            fontSize: 8.0,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            height: 1,
-          ),
-          displayLarge: TextStyle(
-            fontSize: 15.0,
-            color: lightColorScheme.secondary,
-            fontWeight: FontWeight.bold,
-            height: 1,
-          ),
-          displayMedium: TextStyle(
-            fontSize: 10.0,
-            color: lightColorScheme.secondary,
-            fontWeight: FontWeight.bold,
-            height: 1,
-          ),
-          displaySmall: TextStyle(
-            fontSize: 8.0,
-            color: lightColorScheme.secondary,
-            fontWeight: FontWeight.bold,
-            height: 1,
-          ),
-        ));
+        ),
+      ),
+    );
   }
 
   static const ColorScheme lightColorScheme = ColorScheme(

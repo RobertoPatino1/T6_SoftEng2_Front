@@ -11,7 +11,7 @@ class RouteCardBuilder {
       scrollDirection: Axis.horizontal,
       itemCount: routesList.length,
       itemBuilder: (context, index) {
-        TouristRoute touristRoute = routesList[index];
+        final TouristRoute touristRoute = routesList[index];
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -42,22 +42,28 @@ class RouteCardBuilder {
                     children: [
                       Center(
                         child: Container(
-                            width: 160,
-                            height: 80,
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20)),
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      "asset/images/${touristRoute.image}.jpg"),
-                                  fit: BoxFit.cover,
-                                ))),
+                          width: 160,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "asset/images/${touristRoute.image}.jpg",
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
                       Center(
-                          child: Text(touristRoute.name,
-                              style:
-                                  Theme.of(context).textTheme.headlineSmall)),
+                        child: Text(
+                          touristRoute.name,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -73,17 +79,22 @@ class RouteCardBuilder {
                         ),
                       ),
                       Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          child: Text(
-                              "${DateFormat('HH:mm').format(touristRoute.startTime)}H",
-                              style: Theme.of(context).textTheme.labelSmall)),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 5,
+                        ),
+                        child: Text(
+                          "${DateFormat('HH:mm').format(touristRoute.startTime)}H",
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                      ),
                       Container(
                         height: 20,
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 2),
+                          horizontal: 5,
+                          vertical: 2,
+                        ),
                         child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
                           child: Text(
                             touristRoute.description,
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -91,11 +102,15 @@ class RouteCardBuilder {
                         ),
                       ),
                       Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Text(
-                              formatDuration(touristRoute.endTime
-                                  .difference(touristRoute.startTime)),
-                              style: Theme.of(context).textTheme.labelSmall))
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          formatDuration(
+                            touristRoute.endTime
+                                .difference(touristRoute.startTime),
+                          ),
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                      ),
                     ],
                   ),
                 ),

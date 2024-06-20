@@ -9,9 +9,10 @@ class Place {
 
   factory Place.fromJson(Map<String, dynamic> json) {
     return Place(
-      name: json['name'],
-      entryPrice:
-          json['entryPrice'].toDouble(), // Convertir a double si es necesario
+      name: json['name'] as String,
+      // ignore: avoid_dynamic_calls
+      entryPrice: json['entryPrice'].toDouble()
+          as double, // Convertir a double si es necesario
     );
   }
 

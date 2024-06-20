@@ -72,24 +72,12 @@ class LoginState extends State<Login> {
                     style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
-                Container(
-                  height: 50,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(37, 60, 89, 1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      Modular.to.pushNamed('/auth/home/');
-                    },
-                    child: const Text(
-                      'Iniciar sesión',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                      ),
-                    ),
+                OutlinedButton(
+                  onPressed: () {
+                    Modular.to.pushNamed('/auth/home/');
+                  },
+                  child: const Text(
+                    'Iniciar sesión',
                   ),
                 ),
                 const SizedBox(height: 130),
@@ -97,9 +85,8 @@ class LoginState extends State<Login> {
                   onPressed: () {
                     Modular.to.pushNamed('/auth/register');
                   },
-                  child: Text(
+                  child: const Text(
                     'Usuario nuevo? Crea una cuenta',
-                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
               ],

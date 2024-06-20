@@ -21,8 +21,10 @@ class RouteItineraryPage extends StatelessWidget {
             Modular.to.pop();
           },
         ),
-        title: Text(touristRoute.name,
-            style: Theme.of(context).textTheme.headlineLarge),
+        title: Text(
+          touristRoute.name,
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -32,16 +34,18 @@ class RouteItineraryPage extends StatelessWidget {
             children: [
               Center(
                 child: Container(
-                    width: 400,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        image: DecorationImage(
-                          image: AssetImage(
-                              "asset/images/${touristRoute.image}.jpg"),
-                          fit: BoxFit.cover,
-                        ))),
+                  width: 400,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    image: DecorationImage(
+                      image: AssetImage(
+                        "asset/images/${touristRoute.image}.jpg",
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(height: 16),
               Center(
@@ -49,7 +53,7 @@ class RouteItineraryPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: touristRoute.routeType.map((routeType) {
                     return Padding(
-                      padding: const EdgeInsets.all(0.0),
+                      padding: EdgeInsets.zero,
                       child: Icon(
                         RouteTypeHelper.getIconData(routeType),
                         size: 30.0,
@@ -59,8 +63,10 @@ class RouteItineraryPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text('Itinerario de rutas',
-                  style: Theme.of(context).textTheme.headlineMedium),
+              Text(
+                'Itinerario de rutas',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               const SizedBox(height: 10),
               // ignore: sized_box_for_whitespace
               Container(
@@ -72,14 +78,17 @@ class RouteItineraryPage extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: touristRoute.placesList.length,
                     itemBuilder: (context, index) {
-                      Place place = touristRoute.placesList[index].keys.first;
-                      String startTime = DateFormat('HH:mm')
+                      final Place place =
+                          touristRoute.placesList[index].keys.first;
+                      final String startTime = DateFormat('HH:mm')
                           .format(touristRoute.placesList[index].values.first);
                       return SizedBox(
                         width: 100,
                         height: 50,
                         child: ItineraryItem(
-                            time: startTime, description: place.name),
+                          time: startTime,
+                          description: place.name,
+                        ),
                       );
                     },
                   ),
@@ -87,28 +96,23 @@ class RouteItineraryPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Center(
-                child: Text(DateFormat('d-m-y').format(touristRoute.startTime),
-                    style: Theme.of(context).textTheme.headlineSmall),
+                child: Text(
+                  DateFormat('d-m-y').format(touristRoute.startTime),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
               ),
               const SizedBox(height: 16),
               const SizedBox(height: 20),
               Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 37, 60, 89),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
+                child: OutlinedButton(
                   onPressed: () {
-                    Modular.to.pushNamed('/auth/home/room/active',
-                        arguments: touristRoute);
+                    Modular.to.pushNamed(
+                      '/auth/home/room/active',
+                      arguments: touristRoute,
+                    );
                   },
                   child: const Text(
-                    'Empezar Ruta',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    'Ingresar a la ruta',
                   ),
                 ),
               ),
