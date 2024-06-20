@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:share_your_route_front/classes/place.dart';
 import 'package:share_your_route_front/classes/tourist_route.dart';
-import 'package:share_your_route_front/createRoute2.dart';
+import 'package:share_your_route_front/createRoute.dart';
 import 'package:share_your_route_front/enums/route_type.dart';
 import 'package:share_your_route_front/route_itinerary_page.dart';
 import 'package:share_your_route_front/route_type_helper.dart';
@@ -274,7 +274,7 @@ class HomeState extends State<Home> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const CreateRoute2()),
+                        MaterialPageRoute(builder: (_) => const CreateRoute()),
                       );
                     },
                     child: const Row(

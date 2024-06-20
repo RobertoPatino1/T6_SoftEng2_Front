@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:share_your_route_front/main.dart';
 import 'package:share_your_route_front/route_itinerary_page.dart';
-import 'package:share_your_route_front/createRoute2.dart';
+import 'package:share_your_route_front/createRoute.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
