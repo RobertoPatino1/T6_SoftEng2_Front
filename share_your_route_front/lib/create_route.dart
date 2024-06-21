@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:open_location_picker/open_location_picker.dart';
 
 class CreateRoute extends StatefulWidget {
-  const CreateRoute({Key? key}) : super(key: key);
+  const CreateRoute({super.key});
 
   @override
   State<CreateRoute> createState() => _CreateRouteState();
@@ -16,11 +19,37 @@ class _CreateRouteState extends State<CreateRoute> {
   bool showPlaceInfo = false;
   String alertSound = 'Sonido 1';
   bool publicRoute = false;
+  LatLng? meetingPoint;
 
   TextStyle labelTextStyle = const TextStyle(
     fontSize: 16,
     color: Color.fromRGBO(37, 60, 89, 1),
   );
+
+  Future<LatLng> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    var data = await Geolocator.getCurrentPosition();
+    return LatLng(data.latitude, data.longitude);
+  }
 
   void updateCounter(String key, int delta) {
     setState(() {
@@ -103,12 +132,33 @@ class _CreateRouteState extends State<CreateRoute> {
           ),
           Step(
             title: const Text('Seleccionar Punto de Encuentro'),
-            content: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('It works!'),
-                // Aquí se puede integrar un mapa para seleccionar el punto de encuentro
-              ],
+            content: OpenMapSettings(
+              onError: (context, error) {},
+              getCurrentLocation: _determinePosition,
+              reverseZoom: ReverseZoom.building,
+              getLocationStream: () => Geolocator.getPositionStream()
+                  .map((event) => LatLng(event.latitude, event.longitude)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  OpenMapPicker(
+                    decoration: const InputDecoration(
+                      hintText: "Mi ubicación",
+                    ),
+                    onSaved: (FormattedLocation? newValue) {
+                      setState(() {
+                        meetingPoint = newValue?.toLatLng();
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 15),
+                  if (meetingPoint != null)
+                    Text(
+                      'Punto de Encuentro: ${meetingPoint!.latitude}, ${meetingPoint!.longitude}',
+                      style: labelTextStyle,
+                    ),
+                ],
+              ),
             ),
             isActive: _currentStep >= 1,
           ),
@@ -136,6 +186,10 @@ class _CreateRouteState extends State<CreateRoute> {
                 Text('Sonido de Alerta: $alertSound', style: labelTextStyle),
                 const SizedBox(height: 8),
                 Text('Ruta Pública: ${publicRoute ? 'Sí' : 'No'}',
+                    style: labelTextStyle),
+                const SizedBox(height: 8),
+                Text(
+                    'Punto de Encuentro: ${meetingPoint != null ? '${meetingPoint!.latitude}, ${meetingPoint!.longitude}' : 'No seleccionado'}',
                     style: labelTextStyle),
                 const SizedBox(height: 20),
                 Row(

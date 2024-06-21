@@ -83,10 +83,10 @@ class MapState extends State<Map> {
           ? CircularProgressIndicator()
           : FlutterMap(
               options: MapOptions(
-                initialCenter: myPosition!,
+                center: myPosition!,
                 minZoom: 5,
                 maxZoom: 25,
-                initialZoom: 18,
+                zoom: 18,
               ),
               children: [
                 TileLayer(
@@ -102,11 +102,13 @@ class MapState extends State<Map> {
                     width: 80.0,
                     height: 80.0,
                     point: myPosition!,
-                    child: Icon(
-                      Icons.location_pin,
-                      size: 40,
-                      color: Color.fromARGB(255, 230, 31, 17),
-                    ),
+                    builder: (BuildContext context) {
+                      return const Icon(
+                        Icons.location_pin,
+                        size: 40,
+                        color: Color.fromARGB(255, 230, 31, 17),
+                      );
+                    },
                   ),
                 ]),
               ],
