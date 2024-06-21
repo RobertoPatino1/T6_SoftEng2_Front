@@ -6,13 +6,14 @@ import 'package:intl/intl.dart';
 import 'package:share_your_route_front/models/place.dart';
 import 'package:share_your_route_front/models/tourist_route.dart';
 import 'package:share_your_route_front/modules/shared/helpers/route_type_helper.dart';
+import 'package:share_your_route_front/modules/shared/providers/tourist_route_provider.dart';
 
 class RouteItineraryPage extends StatelessWidget {
-  final TouristRoute touristRoute;
-  const RouteItineraryPage({Key? key, required this.touristRoute})
-      : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final TouristRoute touristRoute =
+        // ignore: cast_nullable_to_non_nullable
+        TouristRouteService().getCurrentTouristRoute() as TouristRoute;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

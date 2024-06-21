@@ -7,21 +7,18 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_your_route_front/models/tourist_route.dart';
-import 'package:share_your_route_front/modules/shared/providers/location.dart';
+import 'package:share_your_route_front/modules/shared/providers/location_provider.dart';
+import 'package:share_your_route_front/modules/shared/providers/tourist_route_provider.dart';
 
 class MapPage extends StatelessWidget {
-  final TouristRoute touristRoute;
-  const MapPage({super.key, required this.touristRoute});
-
   @override
   Widget build(BuildContext context) {
-    return Map(touristRoute: touristRoute);
+    return Map();
   }
 }
 
 class Map extends StatefulWidget {
-  final TouristRoute touristRoute;
-  const Map({super.key, required this.touristRoute});
+  const Map({super.key});
 
   @override
   State<Map> createState() => MapState();
@@ -45,6 +42,9 @@ class MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
+    final TouristRoute touristRoute =
+        // ignore: cast_nullable_to_non_nullable
+        TouristRouteService().getCurrentTouristRoute() as TouristRoute;
     return PopScope(
       child: Scaffold(
         appBar: AppBar(
@@ -56,7 +56,7 @@ class MapState extends State<Map> {
             },
           ),
           title: Text(
-            widget.touristRoute.name,
+            touristRoute.name,
             style: Theme.of(context).textTheme.headlineLarge,
           ),
         ),

@@ -68,7 +68,7 @@ class GlobalThemData {
           fontSize: 8.0,
           color: Colors.black,
           fontWeight: FontWeight.bold,
-          height: 1,
+          height: 1.5,
         ),
         displayLarge: TextStyle(
           fontSize: 15.0,
@@ -77,10 +77,10 @@ class GlobalThemData {
           height: 1,
         ),
         displayMedium: TextStyle(
-          fontSize: 10.0,
+          fontSize: 12.0,
           color: lightColorScheme.secondary,
           fontWeight: FontWeight.bold,
-          height: 1,
+          height: 1.5,
         ),
         displaySmall: TextStyle(
           fontSize: 8.0,
@@ -105,11 +105,11 @@ class GlobalThemData {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.all<Color>(lightColorScheme.primary),
+              MaterialStateProperty.all<Color>(lightColorScheme.secondary),
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           textStyle: MaterialStateProperty.all<TextStyle>(
             TextStyle(
-              fontSize: 15.0,
+              fontSize: 20.0,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -125,7 +125,7 @@ class GlobalThemData {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.all<Color>(lightColorScheme.primary),
+              MaterialStateProperty.all<Color>(lightColorScheme.secondary),
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           textStyle: MaterialStateProperty.all<TextStyle>(
             TextStyle(

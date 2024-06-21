@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:share_your_route_front/core/utils/formats/route_duration_format.dart';
 import 'package:share_your_route_front/models/tourist_route.dart';
 import 'package:share_your_route_front/modules/shared/helpers/route_type_helper.dart';
+import 'package:share_your_route_front/modules/shared/providers/tourist_route_provider.dart';
 
 class RouteCardBuilder {
   Widget buildRouteCard(BuildContext context, List<TouristRoute> routesList) {
@@ -19,11 +20,13 @@ class RouteCardBuilder {
             children: [
               GestureDetector(
                 onTap: () {
+                  TouristRouteService().setCurrentTouristRoute(touristRoute);
                   Modular.to
                       .pushNamed('/auth/home/room/', arguments: touristRoute);
                 },
                 child: Container(
                   width: 160,
+                  height: 600,
                   margin: const EdgeInsets.only(top: 12, bottom: 12),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -43,7 +46,7 @@ class RouteCardBuilder {
                       Center(
                         child: Container(
                           width: 160,
-                          height: 80,
+                          height: 90,
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(20),
@@ -61,7 +64,7 @@ class RouteCardBuilder {
                       Center(
                         child: Text(
                           touristRoute.name,
-                          style: Theme.of(context).textTheme.headlineSmall,
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
                       ),
                       Center(
