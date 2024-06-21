@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 
 class CreateRoute extends StatefulWidget {
-  const CreateRoute({super.key});
+  const CreateRoute({Key? key}) : super(key: key);
 
   @override
   State<CreateRoute> createState() => _CreateRouteState();
 }
 
 class _CreateRouteState extends State<CreateRoute> {
+  int _currentStep = 0;
   String routeName = '';
-  Map<String, int> counters = {
-    'numberOfPeople': 2,
-    'numberOfGuides': 1,
-  };
+  int numberOfPeople = 2;
+  int numberOfGuides = 1;
   double rangeAlert = 2;
   bool showPlaceInfo = false;
   String alertSound = 'Sonido 1';
-  bool makeItPublic = false;
+  bool publicRoute = false;
 
   TextStyle labelTextStyle = const TextStyle(
     fontSize: 16,
@@ -25,8 +24,12 @@ class _CreateRouteState extends State<CreateRoute> {
 
   void updateCounter(String key, int delta) {
     setState(() {
-      if (counters[key]! + delta > 0) {
-        counters[key] = counters[key]! + delta;
+      if (key == 'numberOfPeople') {
+        numberOfPeople += delta;
+        if (numberOfPeople < 1) numberOfPeople = 1;
+      } else if (key == 'numberOfGuides') {
+        numberOfGuides += delta;
+        if (numberOfGuides < 0) numberOfGuides = 0;
       }
     });
   }
@@ -34,84 +37,141 @@ class _CreateRouteState extends State<CreateRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Crear una nueva ruta',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(37, 60, 89, 1),
-                ),
-              ),
-              const SizedBox(height: 20),
-              buildRouteNameField(),
-              const SizedBox(height: 15),
-              buildLabeledControl(
-                  'Cantidad de Personas', buildNumberChanger('numberOfPeople')),
-              const SizedBox(height: 15),
-              buildLabeledControl(
-                  'Número de guías', buildNumberChanger('numberOfGuides')),
-              const SizedBox(height: 15),
-              buildLabeledControl('Rango de Alerta', buildRangeSlider()),
-              SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text('Mostrar información del lugar',
-                    style: labelTextStyle),
-                value: showPlaceInfo,
-                onChanged: (bool value) {
-                  setState(() {
-                    showPlaceInfo = value;
-                  });
-                },
-              ),
-              buildLabeledControl('Sonido de Alerta', buildDropdown()),
-              SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text('Ruta pública', style: labelTextStyle),
-                value: makeItPublic,
-                onChanged: (bool value) {
-                  setState(() {
-                    makeItPublic = value;
-                  });
-                },
-              ),
-              ListTile(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                leading: const Icon(Icons.location_pin,
-                    color: Color.fromRGBO(37, 60, 89, 1)),
-                title: Text('Fijar punto de encuentro', style: labelTextStyle),
-                trailing: IconButton(
-                  icon: const Icon(Icons.add,
-                      color: Color.fromRGBO(37, 60, 89, 1)),
-                  onPressed: () {},
-                ),
-              ),
-              SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Aquí puedes añadir la lógica para crear la ruta
+      appBar: AppBar(
+        title: const Text('Crear una nueva Ruta'),
+      ),
+      body: Stepper(
+        currentStep: _currentStep,
+        onStepContinue: () {
+          setState(() {
+            if (_currentStep < 2) {
+              _currentStep++;
+            }
+          });
+        },
+        onStepCancel: () {
+          setState(() {
+            if (_currentStep > 0) {
+              _currentStep--;
+            }
+          });
+        },
+        steps: [
+          Step(
+            title: const Text('Información Inicial'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                buildRouteNameField(),
+                const SizedBox(height: 15),
+                buildLabeledControl('Cantidad de Personas',
+                    buildNumberChanger('numberOfPeople')),
+                const SizedBox(height: 15),
+                buildLabeledControl(
+                    'Número de guías', buildNumberChanger('numberOfGuides')),
+                const SizedBox(height: 15),
+                buildLabeledControl('Rango de Alerta', buildRangeSlider()),
+                const SizedBox(height: 15),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text('Mostrar información del lugar',
+                      style: labelTextStyle),
+                  value: showPlaceInfo,
+                  onChanged: (bool value) {
+                    setState(() {
+                      showPlaceInfo = value;
+                    });
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(37, 60, 89, 1),
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Text('Crear',
-                      style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
-              ),
-            ],
+                const SizedBox(height: 15),
+                buildLabeledControl('Sonido de Alerta', buildDropdown()),
+                const SizedBox(height: 15),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text('Ruta pública', style: labelTextStyle),
+                  value: publicRoute,
+                  onChanged: (bool value) {
+                    setState(() {
+                      publicRoute = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            isActive: _currentStep >= 0,
           ),
-        ),
+          Step(
+            title: const Text('Seleccionar Punto de Encuentro'),
+            content: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('It works!'),
+                // Aquí se puede integrar un mapa para seleccionar el punto de encuentro
+              ],
+            ),
+            isActive: _currentStep >= 1,
+          ),
+          Step(
+            title: const Text('Confirmación'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Resumen de la Ruta', style: labelTextStyle),
+                const Divider(),
+                Text('Nombre de la Ruta: $routeName', style: labelTextStyle),
+                const SizedBox(height: 8),
+                Text('Número de Personas: $numberOfPeople',
+                    style: labelTextStyle),
+                const SizedBox(height: 8),
+                Text('Número de Guías: $numberOfGuides', style: labelTextStyle),
+                const SizedBox(height: 8),
+                Text('Rango de Alerta: ${rangeAlert.round()}',
+                    style: labelTextStyle),
+                const SizedBox(height: 8),
+                Text(
+                    'Mostrar Información del Lugar: ${showPlaceInfo ? 'Sí' : 'No'}',
+                    style: labelTextStyle),
+                const SizedBox(height: 8),
+                Text('Sonido de Alerta: $alertSound', style: labelTextStyle),
+                const SizedBox(height: 8),
+                Text('Ruta Pública: ${publicRoute ? 'Sí' : 'No'}',
+                    style: labelTextStyle),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // Lógica para confirmar la creación de la ruta
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Ruta creada')),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      child: const Text('Confirmar'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Lógica para cancelar la creación de la ruta
+                        setState(() {
+                          _currentStep = 0; // Reiniciar el stepper
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+                      child: const Text('Cancelar'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            isActive: _currentStep >= 2,
+          ),
+        ],
       ),
     );
   }
@@ -121,9 +181,9 @@ class _CreateRouteState extends State<CreateRoute> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Nombre de la Ruta', style: labelTextStyle),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         TextField(
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Ingrese el nombre de la ruta',
           ),
@@ -154,7 +214,8 @@ class _CreateRouteState extends State<CreateRoute> {
           icon: const Icon(Icons.remove, color: Color.fromRGBO(37, 60, 89, 1)),
           onPressed: () => updateCounter(key, -1),
         ),
-        Text('${counters[key]}', style: labelTextStyle),
+        Text('${key == 'numberOfPeople' ? numberOfPeople : numberOfGuides}',
+            style: labelTextStyle),
         IconButton(
           icon: const Icon(Icons.add, color: Color.fromRGBO(37, 60, 89, 1)),
           onPressed: () => updateCounter(key, 1),
