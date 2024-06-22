@@ -24,7 +24,11 @@ class RouteStep2 extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (_) => LocationPickerScreen(
-                  onLocationSelected: onMeetingPointChanged,
+                  onLocationSelected: (LatLng? location) {
+                    onMeetingPointChanged(location);
+                    Navigator.pop(
+                        context); // Close the picker screen after selection
+                  },
                 ),
               ),
             );
