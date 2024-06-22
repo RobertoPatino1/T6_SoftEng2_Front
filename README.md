@@ -31,3 +31,9 @@ If you don't have an access token make sure to check the following [link](https:
 ```
 flutter run -t lib/main/main.dart
 ```
+
+## How to build the APK
+**In the root directory run the following command**
+```
+flutter build apk -t lib/main/main.dart --split-per-abi
+```
