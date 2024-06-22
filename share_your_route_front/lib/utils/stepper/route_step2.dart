@@ -16,54 +16,31 @@ class RouteStep2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        OpenMapSettings(
-          getCurrentLocation: LocationService.determinePosition,
-          reverseZoom: ReverseZoom.building,
-          getLocationStream: () => Geolocator.getPositionStream()
-              .map((event) => LatLng(event.latitude, event.longitude)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              OpenMapPicker(
-                decoration: const InputDecoration(
-                  hintText: "Mi ubicación",
-                ),
-                onSaved: (FormattedLocation? newValue) {
-                  onMeetingPointChanged(newValue?.toLatLng());
-                },
-              ),
-              const SizedBox(height: 15),
-              if (meetingPoint != null)
-                Text(
-                  'Punto de Encuentro: ${meetingPoint!.latitude}, ${meetingPoint!.longitude}',
-                  style: labelTextStyle,
-                ),
-            ],
+    return OpenMapSettings(
+      onError: (context, error) {},
+      getCurrentLocation: LocationService.determinePosition,
+      reverseZoom: ReverseZoom.building,
+      getLocationStream: () => Geolocator.getPositionStream()
+          .map((event) => LatLng(event.latitude, event.longitude)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          OpenMapPicker(
+            decoration: const InputDecoration(
+              hintText: "Mi ubicación",
+            ),
+            onSaved: (FormattedLocation? newValue) {
+              onMeetingPointChanged(newValue?.toLatLng());
+            },
           ),
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {
-            if (meetingPoint != null) {
-              onMeetingPointChanged(meetingPoint);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Punto de encuentro seleccionado')),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content:
-                        Text('Por favor selecciona un punto de encuentro')),
-              );
-            }
-          },
-          child: const Text('Confirmar punto de encuentro'),
-        ),
-      ],
+          const SizedBox(height: 15),
+          if (meetingPoint != null)
+            Text(
+              'Punto de Encuentro: ${meetingPoint!.latitude}, ${meetingPoint!.longitude}',
+              style: labelTextStyle,
+            ),
+        ],
+      ),
     );
   }
 }

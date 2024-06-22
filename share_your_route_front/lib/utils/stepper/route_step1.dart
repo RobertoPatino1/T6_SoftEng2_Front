@@ -58,6 +58,7 @@ class RouteStep1 extends StatelessWidget {
               style: labelTextStyle),
           value: showPlaceInfo,
           onChanged: onShowPlaceInfoChanged,
+          activeColor: const Color.fromRGBO(191, 141, 48, 1),
         ),
         const SizedBox(height: 15),
         buildLabeledControl(
@@ -68,6 +69,7 @@ class RouteStep1 extends StatelessWidget {
           title: const Text('Ruta pública'),
           value: publicRoute,
           onChanged: onPublicRouteChanged,
+          activeColor: const Color.fromRGBO(191, 141, 48, 1),
         ),
       ],
     );

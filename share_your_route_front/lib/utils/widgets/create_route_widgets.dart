@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 
 const TextStyle labelTextStyle = TextStyle(
   fontSize: 16,
-  color: Color.fromRGBO(45, 75, 115, 1),
+  fontWeight: FontWeight.w500,
+);
+
+const TextStyle titlelabelTextStyle = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
 );
 
 Widget buildRouteNameField(
@@ -59,12 +64,13 @@ Widget buildRangeSlider(double value, Function(double) onChanged) {
       onChanged: onChanged,
       thumbColor: const Color.fromRGBO(191, 141, 48, 1),
       secondaryActiveColor: const Color.fromRGBO(45, 75, 115, 1),
-      activeColor: const Color.fromRGBO(45, 75, 115, 1),
+      activeColor: const Color.fromRGBO(191, 141, 48, 1),
       inactiveColor: const Color.fromARGB(255, 137, 137, 137));
 }
 
 Widget buildDropdown(String value, Function(String) onChanged) {
   return DropdownButton<String>(
+    dropdownColor: const Color.fromRGBO(241, 241, 241, 1),
     value: value,
     onChanged: (String? newValue) {
       if (newValue != null) {

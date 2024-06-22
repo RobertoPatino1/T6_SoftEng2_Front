@@ -33,7 +33,7 @@ class RouteStep3 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Resumen de la Ruta', style: labelTextStyle),
+        const Text('Resumen de la Ruta', style: titlelabelTextStyle),
         const Divider(),
         Text('Nombre de la Ruta: $routeName', style: labelTextStyle),
         const SizedBox(height: 8),
