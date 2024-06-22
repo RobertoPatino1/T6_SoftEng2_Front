@@ -20,7 +20,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   Future<void> getCurrentLocation() async {
-    LatLng position = await LocationService.determinePosition();
+    final LatLng position = await LocationService.determinePosition();
     setState(() {
       myPosition = position;
       selectedPosition = myPosition;
@@ -29,7 +29,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
 
   Future<void> searchLocation(String query) async {
     try {
-      List<Location> locations = await locationFromAddress(query);
+      final List<Location> locations = await locationFromAddress(query);
       if (locations.isNotEmpty) {
         final location = locations.first;
         setState(() {
@@ -137,7 +137,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                 ElevatedButton(
                   onPressed: () {
                     widget.onLocationSelected(selectedPosition);
-                    Navigator.pop(context);
+                    Navigator.pop(context, selectedPosition);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
