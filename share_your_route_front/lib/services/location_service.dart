@@ -24,7 +24,7 @@ class LocationService {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
-    var data = await Geolocator.getCurrentPosition();
-    return LatLng(data.latitude, data.longitude);
+    Position position = await Geolocator.getCurrentPosition();
+    return LatLng(position.latitude, position.longitude);
   }
 }
