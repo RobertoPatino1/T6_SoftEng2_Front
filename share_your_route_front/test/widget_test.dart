@@ -8,12 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:share_your_route_front/main.dart';
+import 'package:share_your_route_front/main/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const MaterialApp(home: MainPage()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
@@ -27,4 +27,49 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
+
+  /* testWidgets('ItinerarioRuta page loads correctly',
+      (WidgetTester tester) async {
+    // Build ItinerarioRuta widget and trigger a frame.
+    await tester.pumpWidget(const MaterialApp(
+        home: RouteItineraryPage(
+      route: "",
+    )));
+
+    // Verify that the title is displayed.
+    expect(find.text('Cotopaxi: Belleza Natural'), findsOneWidget);
+
+    // Verify that the image is displayed.
+    expect(find.byType(Image), findsOneWidget);
+
+    // Verify that itinerary items are displayed.
+    expect(find.text('Chuquiragua Lodge'), findsOneWidget);
+    expect(find.text('Laguna de Limpiopungo'), findsOneWidget);
+    expect(find.text('Museo de Arte Moderno'), findsOneWidget);
+    expect(find.text('Refugio José Rivas'), findsOneWidget);
+
+    // Verify that the date is displayed.
+    expect(find.text('20 de enero del 2024'), findsOneWidget);
+
+    // Verify that the price is displayed.
+    expect(find.text('\$75'), findsOneWidget);
+    expect(find.text('\$45'), findsOneWidget);
+
+    // Verify that the button is displayed.
+    expect(find.text('Comprar paquete'), findsOneWidget);
+  });
+
+  testWidgets('CreateRoute2 page loads correctly', (WidgetTester tester) async {
+    // Build CreateRoute2 widget and trigger a frame.
+    await tester.pumpWidget(const MaterialApp(home: CreateRoute2()));
+
+    // Verify that the title and elements are displayed correctly.
+    expect(find.text('Mi Ruta De Cuenca'), findsOneWidget);
+    expect(find.text('Crear'), findsOneWidget);
+    expect(find.byType(TextField), findsWidgets);
+    expect(find.byType(Switch), findsWidgets);
+    expect(find.byType(Slider), findsWidgets);
+    expect(find.byType(DropdownButton), findsWidgets);
+  });
+*/
 }
