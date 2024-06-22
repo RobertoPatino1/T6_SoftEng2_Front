@@ -8,19 +8,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-<<<<<<< HEAD
-import 'package:share_your_route_front/main/main.dart';
-import 'package:share_your_route_front/modules/home/route_creation.dart/presenters/createRoute2.dart';
-=======
 import 'package:share_your_route_front/main.dart';
 import 'package:share_your_route_front/route_itinerary_page.dart';
 import 'package:share_your_route_front/createRoute.dart';
->>>>>>> route_creation
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MaterialApp(home: MainPage()));
+    await tester.pumpWidget(MaterialApp(home: MainPage()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
