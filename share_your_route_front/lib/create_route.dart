@@ -55,7 +55,7 @@ class _CreateRouteState extends State<CreateRoute> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Ruta creada')),
                 );
-                Future.delayed(Duration(seconds: 1), () {
+                Future.delayed(const Duration(seconds: 1), () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const HomePage()),
