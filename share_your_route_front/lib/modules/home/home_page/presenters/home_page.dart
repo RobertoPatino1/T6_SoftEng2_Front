@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:share_your_route_front/core/utils/jsonConverters/tourist_route_json_converter.dart';
 import 'package:share_your_route_front/models/tourist_route.dart';
-import 'package:share_your_route_front/modules/home/route_creation.dart/presenters/createRoute2.dart';
 import 'package:share_your_route_front/modules/shared/builders/route_card_builder.dart';
 import 'package:share_your_route_front/modules/shared/providers/tourist_route_provider.dart';
 
@@ -130,10 +130,7 @@ class HomeState extends State<Home> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const CreateRoute2()),
-                    );
+                    Modular.to.pushNamed('/auth/home/creation');
                   },
                   child: const IntrinsicWidth(
                     child: Center(
@@ -142,10 +139,6 @@ class HomeState extends State<Home> {
                         children: [
                           Text(
                             'Empezar una ruta',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
                           ),
                           SizedBox(
                             width: 2.1,
@@ -167,18 +160,35 @@ class HomeState extends State<Home> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Ruta en curso: \n${currentRoute.name}",
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          ),
-                          const BlinkingDot(),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                        ],
+                      const SizedBox(height: 10),
+                      Text(
+                        "Ruta en curso:",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        currentRoute.name,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: () {
+                          Modular.to.pushNamed('/auth/home/room/');
+                          Modular.to.pushNamed('/auth/home/room/active');
+                        },
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            BlinkingDot(),
+                            SizedBox(width: 8),
+                            Text(
+                              "Seguir ruta",
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -304,7 +314,7 @@ class _BlinkingDotState extends State<BlinkingDot>
             height: 8,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         );

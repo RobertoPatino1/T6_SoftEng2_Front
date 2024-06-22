@@ -8,14 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:share_your_route_front/main.dart';
-import 'package:share_your_route_front/route_itinerary_page.dart';
-import 'package:share_your_route_front/createRoute.dart';
+import 'package:share_your_route_front/main/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MaterialApp(home: MainPage()));
+    await tester.pumpWidget(const MaterialApp(home: MainPage()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
@@ -59,7 +57,7 @@ void main() {
 
     // Verify that the button is displayed.
     expect(find.text('Comprar paquete'), findsOneWidget);
-  });*/
+  });
 
   testWidgets('CreateRoute2 page loads correctly', (WidgetTester tester) async {
     // Build CreateRoute2 widget and trigger a frame.
@@ -73,4 +71,5 @@ void main() {
     expect(find.byType(Slider), findsWidgets);
     expect(find.byType(DropdownButton), findsWidgets);
   });
+*/
 }

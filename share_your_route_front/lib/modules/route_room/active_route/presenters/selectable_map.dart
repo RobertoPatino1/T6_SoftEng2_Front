@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
-const MAPBOX_ACCESS_TOKEN =
-    'sk.eyJ1IjoiZ2phcmV2YWwiLCJhIjoiY2x4MThna3hzMDhqZDJxcTdjaXFxc29vaSJ9.xP7hhukr96mBVQ6aakeAFg';
-
 class SelectableMap extends StatefulWidget {
   final Function(LatLng) onPointSelected;
 
-  const SelectableMap({Key? key, required this.onPointSelected})
-      : super(key: key);
+  const SelectableMap({super.key, required this.onPointSelected});
 
   @override
   State<SelectableMap> createState() => _SelectableMapState();
@@ -29,11 +26,12 @@ class _SelectableMapState extends State<SelectableMap> {
       }
     }
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+      desiredAccuracy: LocationAccuracy.high,
+    );
   }
 
-  void getCurrentLocation() async {
-    Position position = await determinePosition();
+  Future<void> getCurrentLocation() async {
+    final Position position = await determinePosition();
     setState(() {
       myPosition = LatLng(position.latitude, position.longitude);
     });
@@ -51,7 +49,7 @@ class _SelectableMapState extends State<SelectableMap> {
         ? const Center(child: CircularProgressIndicator())
         : FlutterMap(
             options: MapOptions(
-              center: myPosition!,
+              center: myPosition,
               zoom: 15.0,
               onTap: (tapPosition, point) {
                 setState(() {
@@ -64,8 +62,8 @@ class _SelectableMapState extends State<SelectableMap> {
               TileLayer(
                 urlTemplate:
                     'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-                additionalOptions: const {
-                  'accessToken': MAPBOX_ACCESS_TOKEN,
+                additionalOptions: {
+                  'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? "",
                   'id': 'mapbox/streets-v12',
                 },
               ),

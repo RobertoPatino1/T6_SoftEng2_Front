@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:open_location_picker/open_location_picker.dart';
 
@@ -44,10 +43,11 @@ class _CreateRouteState extends State<CreateRoute> {
 
     if (permission == LocationPermission.deniedForever) {
       return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+        'Location permissions are permanently denied, we cannot request permissions.',
+      );
     }
 
-    var data = await Geolocator.getCurrentPosition();
+    final data = await Geolocator.getCurrentPosition();
     return LatLng(data.latitude, data.longitude);
   }
 
@@ -67,7 +67,10 @@ class _CreateRouteState extends State<CreateRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crear una nueva Ruta'),
+        title: Text(
+          'Crear una nueva Ruta',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ),
       body: Stepper(
         currentStep: _currentStep,
@@ -94,18 +97,24 @@ class _CreateRouteState extends State<CreateRoute> {
                 const SizedBox(height: 20),
                 buildRouteNameField(),
                 const SizedBox(height: 15),
-                buildLabeledControl('Cantidad de Personas',
-                    buildNumberChanger('numberOfPeople')),
+                buildLabeledControl(
+                  'Cantidad de Personas',
+                  buildNumberChanger('numberOfPeople'),
+                ),
                 const SizedBox(height: 15),
                 buildLabeledControl(
-                    'Número de guías', buildNumberChanger('numberOfGuides')),
+                  'Número de guías',
+                  buildNumberChanger('numberOfGuides'),
+                ),
                 const SizedBox(height: 15),
                 buildLabeledControl('Rango de Alerta', buildRangeSlider()),
                 const SizedBox(height: 15),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: Text('Mostrar información del lugar',
-                      style: labelTextStyle),
+                  title: Text(
+                    'Mostrar información del lugar',
+                    style: labelTextStyle,
+                  ),
                   value: showPlaceInfo,
                   onChanged: (bool value) {
                     setState(() {
@@ -171,26 +180,34 @@ class _CreateRouteState extends State<CreateRoute> {
                 const Divider(),
                 Text('Nombre de la Ruta: $routeName', style: labelTextStyle),
                 const SizedBox(height: 8),
-                Text('Número de Personas: $numberOfPeople',
-                    style: labelTextStyle),
+                Text(
+                  'Número de Personas: $numberOfPeople',
+                  style: labelTextStyle,
+                ),
                 const SizedBox(height: 8),
                 Text('Número de Guías: $numberOfGuides', style: labelTextStyle),
                 const SizedBox(height: 8),
-                Text('Rango de Alerta: ${rangeAlert.round()}',
-                    style: labelTextStyle),
+                Text(
+                  'Rango de Alerta: ${rangeAlert.round()}',
+                  style: labelTextStyle,
+                ),
                 const SizedBox(height: 8),
                 Text(
-                    'Mostrar Información del Lugar: ${showPlaceInfo ? 'Sí' : 'No'}',
-                    style: labelTextStyle),
+                  'Mostrar Información del Lugar: ${showPlaceInfo ? 'Sí' : 'No'}',
+                  style: labelTextStyle,
+                ),
                 const SizedBox(height: 8),
                 Text('Sonido de Alerta: $alertSound', style: labelTextStyle),
                 const SizedBox(height: 8),
-                Text('Ruta Pública: ${publicRoute ? 'Sí' : 'No'}',
-                    style: labelTextStyle),
+                Text(
+                  'Ruta Pública: ${publicRoute ? 'Sí' : 'No'}',
+                  style: labelTextStyle,
+                ),
                 const SizedBox(height: 8),
                 Text(
-                    'Punto de Encuentro: ${meetingPoint != null ? '${meetingPoint!.latitude}, ${meetingPoint!.longitude}' : 'No seleccionado'}',
-                    style: labelTextStyle),
+                  'Punto de Encuentro: ${meetingPoint != null ? '${meetingPoint!.latitude}, ${meetingPoint!.longitude}' : 'No seleccionado'}',
+                  style: labelTextStyle,
+                ),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -205,7 +222,13 @@ class _CreateRouteState extends State<CreateRoute> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                       ),
-                      child: const Text('Confirmar'),
+                      child: const Text(
+                        'Confirmar',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -217,7 +240,13 @@ class _CreateRouteState extends State<CreateRoute> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
                       ),
-                      child: const Text('Cancelar'),
+                      child: const Text(
+                        'Cancelar',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -226,6 +255,33 @@ class _CreateRouteState extends State<CreateRoute> {
             isActive: _currentStep >= 2,
           ),
         ],
+        controlsBuilder: (BuildContext context, ControlsDetails details) {
+          return Row(
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: details.onStepContinue,
+                child: const Text(
+                  'Continuar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: details.onStepCancel,
+                child: const Text(
+                  'Cancelar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -268,8 +324,10 @@ class _CreateRouteState extends State<CreateRoute> {
           icon: const Icon(Icons.remove, color: Color.fromRGBO(37, 60, 89, 1)),
           onPressed: () => updateCounter(key, -1),
         ),
-        Text('${key == 'numberOfPeople' ? numberOfPeople : numberOfGuides}',
-            style: labelTextStyle),
+        Text(
+          '${key == 'numberOfPeople' ? numberOfPeople : numberOfGuides}',
+          style: labelTextStyle,
+        ),
         IconButton(
           icon: const Icon(Icons.add, color: Color.fromRGBO(37, 60, 89, 1)),
           onPressed: () => updateCounter(key, 1),

@@ -107,9 +107,42 @@ class RouteItineraryPage extends StatelessWidget {
               Center(
                 child: OutlinedButton(
                   onPressed: () {
-                    Modular.to.pushNamed(
-                      '/auth/home/room/active',
-                      arguments: touristRoute,
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            "Ingreso a la ruta",
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
+                          content: const Text(
+                            "Estás a punto de ingresar a esta ruta",
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                "Cancelar",
+                                style: Theme.of(context).textTheme.displayLarge,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            TextButton(
+                              child: Text(
+                                "Aceptar",
+                                style: Theme.of(context).textTheme.displayLarge,
+                              ),
+                              onPressed: () {
+                                Modular.to.pushNamed(
+                                  '/auth/home/room/active',
+                                  arguments: touristRoute,
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
                   child: const Text(

@@ -109,7 +109,7 @@ class GlobalThemData {
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           textStyle: MaterialStateProperty.all<TextStyle>(
             TextStyle(
-              fontSize: 20.0,
+              fontSize: 15.0,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -129,7 +129,7 @@ class GlobalThemData {
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           textStyle: MaterialStateProperty.all<TextStyle>(
             TextStyle(
-              fontSize: 20.0,
+              fontSize: 12.0,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),

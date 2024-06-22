@@ -13,7 +13,6 @@ class RouteCardBuilder {
       itemCount: routesList.length,
       itemBuilder: (context, index) {
         final TouristRoute touristRoute = routesList[index];
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(

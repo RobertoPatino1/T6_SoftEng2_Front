@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -13,7 +11,7 @@ import 'package:share_your_route_front/modules/shared/providers/tourist_route_pr
 class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Map();
+    return const Map();
   }
 }
 
@@ -64,10 +62,10 @@ class MapState extends State<Map> {
             ? const Center(child: CircularProgressIndicator())
             : FlutterMap(
                 options: MapOptions(
-                  initialCenter: myPosition!,
+                  center: myPosition,
                   minZoom: 5,
                   maxZoom: 25,
-                  initialZoom: 18,
+                  zoom: 18,
                 ),
                 children: [
                   TileLayer(
@@ -84,16 +82,67 @@ class MapState extends State<Map> {
                         width: 80.0,
                         height: 80.0,
                         point: myPosition!,
-                        child: const Icon(
-                          Icons.location_pin,
-                          size: 40,
-                          color: Color.fromARGB(255, 230, 31, 17),
-                        ),
+                        builder: (BuildContext context) {
+                          return const Icon(
+                            Icons.location_pin,
+                            size: 40,
+                            color: Color.fromARGB(255, 230, 31, 17),
+                          );
+                        },
                       ),
                     ],
                   ),
                 ],
               ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text(
+                    "Salir de la ruta",
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+                  content: const Text(
+                    "¿Está seguro de que quieres salir?",
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text(
+                        "Cancelar",
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        "Aceptar",
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
+                      onPressed: () {
+                        TouristRouteService().setCurrentTouristRoute(null);
+                        Modular.to.pop();
+                        Modular.to.pop();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              100,
+            ),
+          ),
+          child: const Icon(Icons.exit_to_app),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       ),
     );
   }

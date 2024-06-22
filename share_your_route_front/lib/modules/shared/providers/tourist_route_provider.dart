@@ -10,7 +10,8 @@ class TouristRouteService {
   ValueNotifier<TouristRoute?> currentTouristRouteNotifier =
       ValueNotifier<TouristRoute?>(null);
 
-  void setCurrentTouristRoute(TouristRoute route) {
+  // ignore: use_setters_to_change_properties
+  void setCurrentTouristRoute(TouristRoute? route) {
     currentTouristRouteNotifier.value = route;
   }
 
