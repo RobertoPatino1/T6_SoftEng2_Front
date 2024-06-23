@@ -37,44 +37,163 @@ class RouteStep4 extends StatelessWidget {
       children: [
         const Text('Resumen de la Ruta', style: titlelabelTextStyle),
         const Divider(),
-        Text('Nombre de la Ruta: $routeName', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text('Número de Personas: $numberOfPeople', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text('Número de Guías: $numberOfGuides', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text('Rango de Alerta: ${rangeAlert.round()}', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text(
-          'Mostrar Información del Lugar: ${showPlaceInfo ? 'Sí' : 'No'}',
-          style: labelTextStyle,
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Nombre de la Ruta: ',
+                style: boldlabelTextStyle,
+              ),
+              TextSpan(
+                text: routeName,
+                style: labelTextStyle,
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 8),
-        Text('Sonido de Alerta: $alertSound', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text(
-          'Ruta Pública: ${publicRoute ? 'Sí' : 'No'}',
-          style: labelTextStyle,
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Número de Personas: ',
+                style: boldlabelTextStyle,
+              ),
+              TextSpan(
+                text: '$numberOfPeople',
+                style: labelTextStyle,
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 8),
-        Text(
-          'Punto de Encuentro: ${meetingPoint != null ? '${meetingPoint!.latitude}, ${meetingPoint!.longitude}' : 'No seleccionado'}',
-          style: labelTextStyle,
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Número de Guías: ',
+                style: boldlabelTextStyle,
+              ),
+              TextSpan(
+                text: '$numberOfGuides',
+                style: labelTextStyle,
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 8),
-        const Text('Paradas:', style: titlelabelTextStyle),
-        if (stops.isEmpty)
-          const Text('No se han seleccionado paradas', style: labelTextStyle)
-        else
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Rango de Alerta: ',
+                style: boldlabelTextStyle,
+              ),
+              TextSpan(
+                text: '${rangeAlert.round()}',
+                style: labelTextStyle,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Mostrar Información del Lugar: ',
+                style: boldlabelTextStyle,
+              ),
+              TextSpan(
+                text: showPlaceInfo ? 'Sí' : 'No',
+                style: labelTextStyle,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Sonido de Alerta: ',
+                style: boldlabelTextStyle,
+              ),
+              TextSpan(
+                text: alertSound,
+                style: labelTextStyle,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Ruta Pública: ',
+                style: boldlabelTextStyle,
+              ),
+              TextSpan(
+                text: publicRoute ? 'Sí' : 'No',
+                style: labelTextStyle,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Punto de Encuentro: ',
+                style: boldlabelTextStyle,
+              ),
+              TextSpan(
+                text: meetingPoint != null
+                    ? '${meetingPoint!.latitude}, ${meetingPoint!.longitude}'
+                    : 'No seleccionado',
+                style: labelTextStyle,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Paradas: ',
+                style: boldlabelTextStyle,
+              ),
+              TextSpan(
+                text: stops.isEmpty ? 'No se han seleccionado paradas' : '',
+                style: labelTextStyle,
+              ),
+            ],
+          ),
+        ),
+        const Divider(),
+        if (stops.isNotEmpty)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(stops.length, (index) {
               final stop = stops[index];
               final stopName = stop['name'];
               final stopTime = stop['time'] as TimeOfDay;
-              return Text(
-                'Parada ${index + 1}: $stopName - ${stopTime.format(context)}',
-                style: labelTextStyle,
+              return RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Parada ${index + 1}: ',
+                      style: boldlabelTextStyle,
+                    ),
+                    TextSpan(
+                      text: '$stopName - ${stopTime.format(context)}',
+                      style: labelTextStyle,
+                    ),
+                  ],
+                ),
               );
             }),
           ),

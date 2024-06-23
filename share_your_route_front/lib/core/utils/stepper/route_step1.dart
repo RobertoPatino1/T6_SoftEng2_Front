@@ -58,7 +58,7 @@ class _RouteStep1State extends State<RouteStep1> {
           buildRouteNameField(widget.routeName, widget.onRouteNameChanged),
           const SizedBox(height: 15),
           buildLabeledControl(
-              'Cantidad de Personas',
+              'Cantidad de personas',
               buildNumberChanger(
                   widget.numberOfPeople, widget.onNumberOfPeopleChanged)),
           const SizedBox(height: 15),
@@ -67,7 +67,7 @@ class _RouteStep1State extends State<RouteStep1> {
               buildNumberChanger(
                   widget.numberOfGuides, widget.onNumberOfGuidesChanged)),
           const SizedBox(height: 15),
-          const Text('Rango de Alerta', style: labelTextStyle),
+          const Text('Rango de alerta', style: titlelabelTextStyle),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -86,21 +86,23 @@ class _RouteStep1State extends State<RouteStep1> {
           const SizedBox(height: 15),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Mostrar información del lugar',
-                style: labelTextStyle),
+            title: const Text(
+              'Mostrar información del lugar',
+              style: titlelabelTextStyle,
+            ),
             value: widget.showPlaceInfo,
             onChanged: widget.onShowPlaceInfoChanged,
             activeColor: const Color.fromRGBO(191, 141, 48, 1),
           ),
           const SizedBox(height: 15),
-          buildLabeledControl('Sonido de Alerta',
+          buildLabeledControl('Sonido de alerta',
               buildDropdown(widget.alertSound, widget.onAlertSoundChanged)),
           const SizedBox(height: 15),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
             title: const Text(
               'Ruta pública',
-              style: labelTextStyle,
+              style: titlelabelTextStyle,
             ),
             value: widget.publicRoute,
             onChanged: widget.onPublicRouteChanged,
