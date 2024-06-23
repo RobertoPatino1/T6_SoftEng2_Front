@@ -53,6 +53,8 @@ class _AddStopScreenState extends State<AddStopScreen> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
+      helpText:
+          'Selecciona una hora para llegar a la parada', // Cambia el texto aquí
       builder: (BuildContext context, Widget? child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
