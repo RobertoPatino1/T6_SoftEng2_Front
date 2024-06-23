@@ -13,6 +13,7 @@ class RouteStep4 extends StatelessWidget {
   final LatLng? meetingPoint;
   final VoidCallback onConfirm;
   final VoidCallback onCancel;
+  final List<Map<String, dynamic>> stops;
 
   const RouteStep4({
     super.key,
@@ -26,6 +27,7 @@ class RouteStep4 extends StatelessWidget {
     required this.meetingPoint,
     required this.onConfirm,
     required this.onCancel,
+    required this.stops,
   });
 
   @override
@@ -43,18 +45,40 @@ class RouteStep4 extends StatelessWidget {
         const SizedBox(height: 8),
         Text('Rango de Alerta: ${rangeAlert.round()}', style: labelTextStyle),
         const SizedBox(height: 8),
-        Text('Mostrar Información del Lugar: ${showPlaceInfo ? 'Sí' : 'No'}',
-            style: labelTextStyle),
+        Text(
+          'Mostrar Información del Lugar: ${showPlaceInfo ? 'Sí' : 'No'}',
+          style: labelTextStyle,
+        ),
         const SizedBox(height: 8),
         Text('Sonido de Alerta: $alertSound', style: labelTextStyle),
         const SizedBox(height: 8),
-        Text('Ruta Pública: ${publicRoute ? 'Sí' : 'No'}',
-            style: labelTextStyle),
+        Text(
+          'Ruta Pública: ${publicRoute ? 'Sí' : 'No'}',
+          style: labelTextStyle,
+        ),
         const SizedBox(height: 8),
         Text(
           'Punto de Encuentro: ${meetingPoint != null ? '${meetingPoint!.latitude}, ${meetingPoint!.longitude}' : 'No seleccionado'}',
           style: labelTextStyle,
         ),
+        const SizedBox(height: 8),
+        const Text('Paradas:', style: titlelabelTextStyle),
+        if (stops.isEmpty)
+          const Text('No se han seleccionado paradas', style: labelTextStyle)
+        else
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(stops.length, (index) {
+              final stop = stops[index];
+              final stopName = stop['name'];
+              final stopTime = stop['time'] as TimeOfDay;
+              return Text(
+                'Parada ${index + 1}: $stopName - ${stopTime.format(context)}',
+                style: labelTextStyle,
+              );
+            }),
+          ),
+        const SizedBox(height: 20),
       ],
     );
   }

@@ -77,7 +77,8 @@ class _CreateRouteState extends State<CreateRoute> {
             final isFirstStep = _currentStep == 0;
             return Padding(
               padding: const EdgeInsets.only(
-                  top: 16.0), // Añade espacio arriba de los botones
+                top: 16.0,
+              ), // Añade espacio arriba de los botones
               child: Row(
                 children: <Widget>[
                   ElevatedButton(
@@ -212,6 +213,7 @@ class _CreateRouteState extends State<CreateRoute> {
                 alertSound: alertSound,
                 publicRoute: publicRoute,
                 meetingPoint: meetingPoint,
+                stops: stops,
                 onConfirm: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Ruta creada')),
