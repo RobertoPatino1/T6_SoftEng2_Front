@@ -63,7 +63,7 @@ class _RouteStep2State extends State<RouteStep2> {
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
+              backgroundColor: const Color.fromRGBO(191, 141, 48, 1),
             ),
             child: const Text(
               'Agregar Paradas',
@@ -75,7 +75,7 @@ class _RouteStep2State extends State<RouteStep2> {
           )
         else
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('Paradas', style: titlelabelTextStyle),
               ListView.builder(
@@ -85,7 +85,8 @@ class _RouteStep2State extends State<RouteStep2> {
                   final stop = stops[index];
                   return ListTile(
                     title: Text(
-                      '${stop['time'].format(context)} - ${stop['name']}',
+                      // ignore: avoid_dynamic_calls
+                      '${stop['name']} - ${stop['time'].format(context)}',
                     ),
                     subtitle: Text(
                       'Ubicación: ${stop['location'].latitude}, ${stop['location'].longitude}',
@@ -112,7 +113,7 @@ class _RouteStep2State extends State<RouteStep2> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
+                  backgroundColor: const Color.fromRGBO(191, 141, 48, 1),
                 ),
                 child: const Text(
                   'Agregar otra Parada',

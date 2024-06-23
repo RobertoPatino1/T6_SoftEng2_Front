@@ -51,7 +51,7 @@ class _RouteStep2State extends State<RouteStep3> {
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
+            backgroundColor: const Color.fromRGBO(191, 141, 48, 1),
           ),
           child: const Text(
             'Seleccionar en el mapa',

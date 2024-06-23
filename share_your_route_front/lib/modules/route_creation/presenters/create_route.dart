@@ -32,13 +32,15 @@ class _CreateRouteState extends State<CreateRoute> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                fontSize: 25.0,
-                color: Color.fromRGBO(45, 75, 115, 1),
-                fontWeight: FontWeight.bold,
-                height: 1),
-            "Crear una nueva ruta"),
+          "Crear una nueva ruta",
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontSize: 25.0,
+            color: Color.fromRGBO(45, 75, 115, 1),
+            fontWeight: FontWeight.bold,
+            height: 1,
+          ),
+        ),
       ),
       body: Theme(
         data: ThemeData(
@@ -78,37 +80,60 @@ class _CreateRouteState extends State<CreateRoute> {
             return Padding(
               padding: const EdgeInsets.only(
                 top: 16.0,
-              ), // Añade espacio arriba de los botones
+              ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  ElevatedButton(
-                    onPressed: details.onStepContinue,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
-                    ),
-                    child: Text(
-                      isLastStep ? 'Crear ruta' : 'Siguiente',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10), // Añade espacio entre los botones
                   if (!isFirstStep)
-                    ElevatedButton(
-                      onPressed: details.onStepCancel,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
-                      ),
-                      child: const Text(
-                        'Atrás',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: details.onStepCancel,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
+                        ),
+                        child: const Text(
+                          'Atrás',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
+                  const SizedBox(width: 10),
+                  if (isFirstStep)
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: details.onStepContinue,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
+                        ),
+                        child: const Text(
+                          'Siguiente',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: details.onStepContinue,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
+                        ),
+                        child: Text(
+                          isLastStep ? 'Crear ruta' : 'Siguiente',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    )
                 ],
               ),
             );
