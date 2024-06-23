@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:open_location_picker/open_location_picker.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:share_your_route_front/core/utils/stepper/route_step1.dart';
 import 'package:share_your_route_front/core/utils/stepper/route_step2.dart';
 import 'package:share_your_route_front/core/utils/stepper/route_step3.dart';
+import 'package:share_your_route_front/core/utils/stepper/route_step4.dart';
 import 'package:share_your_route_front/modules/home/home_page/presenters/home_page.dart';
 
 class CreateRoute extends StatefulWidget {
@@ -22,6 +23,7 @@ class _CreateRouteState extends State<CreateRoute> {
   String alertSound = 'Sonido 1';
   bool publicRoute = false;
   LatLng? meetingPoint;
+  List<Map<String, dynamic>> stops = [];
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +50,9 @@ class _CreateRouteState extends State<CreateRoute> {
           currentStep: _currentStep,
           onStepContinue: () {
             setState(() {
-              if (_currentStep < 2) {
+              if (_currentStep < 3) {
                 _currentStep++;
               } else {
-                // Lógica para confirmar la creación de la ruta
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Ruta creada')),
                 );
@@ -72,7 +73,7 @@ class _CreateRouteState extends State<CreateRoute> {
             });
           },
           controlsBuilder: (BuildContext context, ControlsDetails details) {
-            final isLastStep = _currentStep == 2;
+            final isLastStep = _currentStep == 3;
             final isFirstStep = _currentStep == 0;
             return Padding(
               padding: const EdgeInsets.only(
@@ -164,19 +165,35 @@ class _CreateRouteState extends State<CreateRoute> {
             ),
             Step(
               title: const Text(
-                'Seleccionar Punto de Encuentro',
+                'Agregar Paradas',
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               content: RouteStep2(
+                stops: stops,
+                onStopsChanged: (value) => setState(() {
+                  stops = value;
+                }),
+              ),
+              isActive: _currentStep >= 1,
+            ),
+            Step(
+              title: const Text(
+                'Seleccionar Punto de Encuentro',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              content: RouteStep3(
                 meetingPoint: meetingPoint,
                 onMeetingPointChanged: (value) => setState(() {
                   meetingPoint = value;
                 }),
               ),
-              isActive: _currentStep >= 1,
+              isActive: _currentStep >= 2,
             ),
             Step(
               title: const Text(
@@ -186,7 +203,7 @@ class _CreateRouteState extends State<CreateRoute> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              content: RouteStep3(
+              content: RouteStep4(
                 routeName: routeName,
                 numberOfPeople: numberOfPeople,
                 numberOfGuides: numberOfGuides,
@@ -212,7 +229,7 @@ class _CreateRouteState extends State<CreateRoute> {
                   });
                 },
               ),
-              isActive: _currentStep >= 2,
+              isActive: _currentStep >= 3,
             ),
           ],
         ),
