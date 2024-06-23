@@ -23,7 +23,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp.router(
       title: 'Share your route',
       themeMode: ThemeMode.light,
-      theme: GlobalThemData.lightThemeData,
+      theme: GlobalThemeData.lightThemeData,
       routerConfig: Modular.routerConfig,
     ); //added by extension
   }

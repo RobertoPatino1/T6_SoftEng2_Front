@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors, deprecated_member_use, avoid_classes_with_only_static_members
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class GlobalThemData {
+// ignore: avoid_classes_with_only_static_members
+class GlobalThemeData {
   static final Color _lightFocusColor = Colors.black.withOpacity(0.12);
 
   static ThemeData lightThemeData =
@@ -15,86 +15,87 @@ class GlobalThemData {
       scaffoldBackgroundColor: colorScheme.surface,
       highlightColor: Colors.transparent,
       focusColor: focusColor,
-      textTheme: TextTheme(
-        headlineLarge: TextStyle(
+      textTheme: GoogleFonts.poppinsTextTheme(TextTheme(
+        headlineLarge: GoogleFonts.poppins(
           fontSize: 25.0,
           color: lightColorScheme.primary,
           fontWeight: FontWeight.bold,
           height: 1,
         ),
-        headlineMedium: TextStyle(
+        headlineMedium: GoogleFonts.poppins(
           fontSize: 20.0,
           color: lightColorScheme.primary,
           fontWeight: FontWeight.bold,
           height: 1,
         ),
-        headlineSmall: TextStyle(
+        headlineSmall: GoogleFonts.poppins(
           fontSize: 15.0,
           color: lightColorScheme.primary,
           fontWeight: FontWeight.bold,
           height: 1,
         ),
-        bodyLarge: TextStyle(
+        bodyLarge: GoogleFonts.poppins(
           fontSize: 15.0,
           color: Colors.black,
           fontWeight: FontWeight.normal,
           height: 1,
         ),
-        bodyMedium: TextStyle(
+        bodyMedium: GoogleFonts.poppins(
           fontSize: 10.0,
           color: Colors.black,
           fontWeight: FontWeight.normal,
           height: 1,
         ),
-        bodySmall: TextStyle(
+        bodySmall: GoogleFonts.poppins(
           fontSize: 8.0,
           color: Colors.black,
           fontWeight: FontWeight.normal,
           height: 1,
         ),
-        labelLarge: TextStyle(
+        labelLarge: GoogleFonts.poppins(
           fontSize: 15.0,
           color: Colors.black,
           fontWeight: FontWeight.bold,
           height: 1,
         ),
-        labelMedium: TextStyle(
+        labelMedium: GoogleFonts.poppins(
           fontSize: 10.0,
           color: Colors.black,
           fontWeight: FontWeight.bold,
           height: 1,
         ),
-        labelSmall: TextStyle(
+        labelSmall: GoogleFonts.poppins(
           fontSize: 8.0,
           color: Colors.black,
           fontWeight: FontWeight.bold,
           height: 1.5,
         ),
-        displayLarge: TextStyle(
+        displayLarge: GoogleFonts.poppins(
           fontSize: 15.0,
           color: lightColorScheme.secondary,
           fontWeight: FontWeight.bold,
           height: 1,
         ),
-        displayMedium: TextStyle(
+        displayMedium: GoogleFonts.poppins(
           fontSize: 12.0,
           color: lightColorScheme.secondary,
           fontWeight: FontWeight.bold,
           height: 1.5,
         ),
-        displaySmall: TextStyle(
+        displaySmall: GoogleFonts.poppins(
           fontSize: 8.0,
           color: lightColorScheme.secondary,
           fontWeight: FontWeight.bold,
           height: 1,
         ),
-      ),
+      )),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           foregroundColor:
+              // ignore: deprecated_member_use
               MaterialStateProperty.all<Color>(lightColorScheme.primary),
           textStyle: MaterialStateProperty.all<TextStyle>(
-            TextStyle(
+            GoogleFonts.poppins(
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
               color: lightColorScheme.primary,
@@ -108,7 +109,7 @@ class GlobalThemData {
               MaterialStateProperty.all<Color>(lightColorScheme.secondary),
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           textStyle: MaterialStateProperty.all<TextStyle>(
-            TextStyle(
+            GoogleFonts.poppins(
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -128,7 +129,7 @@ class GlobalThemData {
               MaterialStateProperty.all<Color>(lightColorScheme.secondary),
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           textStyle: MaterialStateProperty.all<TextStyle>(
-            TextStyle(
+            GoogleFonts.poppins(
               fontSize: 12.0,
               fontWeight: FontWeight.bold,
               color: Colors.white,
