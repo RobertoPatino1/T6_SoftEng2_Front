@@ -78,4 +78,13 @@ FIREBASE_DATABASE_URL=https://share-your-route-ff4ad-default-rtdb.firebaseio.com
 - The real time database can be found [here](https://share-your-route-ff4ad-default-rtdb.firebaseio.com).
 - The application credentials can only be obtained via the sysadmin.
 
-
+## Frameworks/Tools used during the project development
+### Front-End
+- [Flutter](https://flutter.dev/): Front-End framework used to develop the mobile application.
+- [Dart](https://dart.dev/): Default programming language used by Flutter.
+  
+### Back-End
+- [Express.js](https://expressjs.com/): Back-End framework used to create the API and set up the endpoints.
+- [Firebase](https://firebase.google.com/): Real-Time database used to store relevant data regarding the project like users, routes and coordinates.
+- [JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript): Default programming language used by Express.js.
+- [Render](https://render.com/): Deployment service used to deploy the back-end.
