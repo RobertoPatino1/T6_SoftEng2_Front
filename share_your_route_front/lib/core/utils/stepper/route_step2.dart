@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:share_your_route_front/core/widgets/create_route_widgets.dart';
 import 'package:share_your_route_front/modules/route_creation/presenters/add_stop_screen.dart';
+import 'package:share_your_route_front/modules/route_creation/presenters/view_stops_map_screen.dart'; // Importar la nueva pantalla
 
 class RouteStep2 extends StatefulWidget {
   final List<Map<String, dynamic>> stops;
@@ -153,6 +153,27 @@ class _RouteStep2State extends State<RouteStep2> {
                 ),
                 child: const Text(
                   'Agregar otra Parada',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ViewStopsMapScreen(stops: stops),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(191, 141, 48, 1),
+                ),
+                child: const Text(
+                  'Ver todas las paradas en el mapa',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
