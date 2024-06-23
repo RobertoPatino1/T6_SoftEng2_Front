@@ -1,59 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_your_route_front/core/widgets/create_route_widgets.dart';
+import 'package:share_your_route_front/modules/route_creation/presenters/location_picker_screen.dart';
 
-class RouteStep3 extends StatelessWidget {
-  final String routeName;
-  final int numberOfPeople;
-  final int numberOfGuides;
-  final double rangeAlert;
-  final bool showPlaceInfo;
-  final String alertSound;
-  final bool publicRoute;
+class RouteStep3 extends StatefulWidget {
   final LatLng? meetingPoint;
-  final VoidCallback onConfirm;
-  final VoidCallback onCancel;
+  final Function(LatLng?) onMeetingPointChanged;
 
   const RouteStep3({
     super.key,
-    required this.routeName,
-    required this.numberOfPeople,
-    required this.numberOfGuides,
-    required this.rangeAlert,
-    required this.showPlaceInfo,
-    required this.alertSound,
-    required this.publicRoute,
     required this.meetingPoint,
-    required this.onConfirm,
-    required this.onCancel,
+    required this.onMeetingPointChanged,
   });
+
+  @override
+  State<RouteStep3> createState() => _RouteStep2State();
+}
+
+class _RouteStep2State extends State<RouteStep3> {
+  LatLng? selectedPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedPosition = widget.meetingPoint;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Resumen de la Ruta', style: titlelabelTextStyle),
-        const Divider(),
-        Text('Nombre de la Ruta: $routeName', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text('Número de Personas: $numberOfPeople', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text('Número de Guías: $numberOfGuides', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text('Rango de Alerta: ${rangeAlert.round()}', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text('Mostrar Información del Lugar: ${showPlaceInfo ? 'Sí' : 'No'}',
-            style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text('Sonido de Alerta: $alertSound', style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text('Ruta Pública: ${publicRoute ? 'Sí' : 'No'}',
-            style: labelTextStyle),
-        const SizedBox(height: 8),
-        Text(
-            'Punto de Encuentro: ${meetingPoint != null ? '${meetingPoint!.latitude}, ${meetingPoint!.longitude}' : 'No seleccionado'}',
-            style: labelTextStyle),
+        ElevatedButton(
+          onPressed: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => LocationPickerScreen(
+                  onLocationSelected: (location) {
+                    setState(() {
+                      selectedPosition = location;
+                    });
+                  },
+                ),
+              ),
+            );
+
+            if (result != null && result is LatLng) {
+              widget.onMeetingPointChanged(result);
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
+          ),
+          child: const Text(
+            'Seleccionar en el mapa',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+          ),
+        ),
+        const SizedBox(height: 15),
+        if (selectedPosition != null)
+          Text(
+            'Punto de Encuentro: ${selectedPosition!.latitude}, ${selectedPosition!.longitude}',
+            style: labelTextStyle,
+          ),
       ],
     );
   }
