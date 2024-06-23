@@ -29,12 +29,21 @@ class _RouteStep2State extends State<RouteStep2> {
   void _addStop(String name, LatLng location, TimeOfDay time) {
     final newStop = {'name': name, 'location': location, 'time': time};
     setState(() {
-      if (!stops.any((stop) =>
-          stop['name'] == name &&
-          stop['location'] == location &&
-          stop['time'] == time)) {
+      if (!stops.any(
+        (stop) =>
+            stop['name'] == name &&
+            stop['location'] == location &&
+            stop['time'] == time,
+      )) {
         stops.add(newStop);
       }
+    });
+    widget.onStopsChanged(stops);
+  }
+
+  void _removeStop(int index) {
+    setState(() {
+      stops.removeAt(index);
     });
     widget.onStopsChanged(stops);
   }
@@ -66,7 +75,7 @@ class _RouteStep2State extends State<RouteStep2> {
               backgroundColor: const Color.fromRGBO(191, 141, 48, 1),
             ),
             child: const Text(
-              'Agregar Paradas',
+              'Agregar una Parada',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -77,19 +86,46 @@ class _RouteStep2State extends State<RouteStep2> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Paradas', style: titlelabelTextStyle),
+              const Text(
+                'Paradas',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                  color: Color.fromRGBO(0, 0, 0, 1),
+                ),
+              ),
+              const Divider(),
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: stops.length,
                 itemBuilder: (context, index) {
                   final stop = stops[index];
-                  return ListTile(
-                    title: Text(
-                      // ignore: avoid_dynamic_calls
-                      '${stop['name']} - ${stop['time'].format(context)}',
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 2.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 8.0),
+                    decoration: BoxDecoration(
+                      color: index.isEven
+                          ? const Color.fromRGBO(45, 75, 115, 1)
+                          : const Color.fromRGBO(37, 60, 89, 1),
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    subtitle: Text(
-                      'Ubicación: ${stop['location'].latitude}, ${stop['location'].longitude}',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${stop['time'].format(context)}    ${stop['name']}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close, color: Colors.white),
+                          onPressed: () => _removeStop(index),
+                        ),
+                      ],
                     ),
                   );
                 },
