@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:intl/intl.dart';
-import 'package:share_your_route_front/core/utils/formats/route_duration_format.dart';
+import 'package:share_your_route_front/core/utils/formats/format_duration.dart';
 import 'package:share_your_route_front/models/tourist_route.dart';
 import 'package:share_your_route_front/modules/shared/helpers/route_type_helper.dart';
 import 'package:share_your_route_front/modules/shared/providers/tourist_route_provider.dart';
@@ -86,7 +85,7 @@ class RouteCardBuilder {
                           vertical: 5,
                         ),
                         child: Text(
-                          "${DateFormat('HH:mm').format(touristRoute.startTime)}H",
+                          "${touristRoute.startTime.format(context)}H",
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ),
@@ -107,9 +106,7 @@ class RouteCardBuilder {
                         margin: const EdgeInsets.symmetric(horizontal: 5),
                         child: Text(
                           formatDuration(
-                            touristRoute.endTime
-                                .difference(touristRoute.startTime),
-                          ),
+                              touristRoute.startTime, touristRoute.endTime),
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ),

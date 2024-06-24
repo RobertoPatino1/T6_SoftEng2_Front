@@ -16,6 +16,8 @@ class CreateRoute extends StatefulWidget {
 class _CreateRouteState extends State<CreateRoute> {
   int _currentStep = 0;
   String routeName = '';
+  String routeDescription = '';
+  DateTime routeDate = DateTime.now();
   int numberOfPeople = 2;
   int numberOfGuides = 1;
   double rangeAlert = 2;
@@ -161,6 +163,8 @@ class _CreateRouteState extends State<CreateRoute> {
                 ),
                 content: RouteStep1(
                   routeName: routeName,
+                  routeDescription: routeDescription,
+                  routeDate: routeDate,
                   numberOfPeople: numberOfPeople,
                   numberOfGuides: numberOfGuides,
                   rangeAlert: rangeAlert,
@@ -169,6 +173,12 @@ class _CreateRouteState extends State<CreateRoute> {
                   publicRoute: publicRoute,
                   onRouteNameChanged: (value) => setState(() {
                     routeName = value;
+                  }),
+                  onRouteDescriptionChanged: (value) => setState(() {
+                    routeDescription = value;
+                  }),
+                  onRouteDateChanged: (date) => setState(() {
+                    routeDate = date;
                   }),
                   onNumberOfPeopleChanged: (value) => setState(() {
                     numberOfPeople = value;
@@ -243,6 +253,8 @@ class _CreateRouteState extends State<CreateRoute> {
                 ),
                 content: RouteStep4(
                   routeName: routeName,
+                  routeDescription: routeDescription,
+                  routeDate: routeDate,
                   numberOfPeople: numberOfPeople,
                   numberOfGuides: numberOfGuides,
                   rangeAlert: rangeAlert,

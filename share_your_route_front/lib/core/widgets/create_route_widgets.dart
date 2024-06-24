@@ -35,6 +35,24 @@ Widget buildRouteNameField(
   );
 }
 
+Widget buildRouteDescriptionField(
+    String routeDescription, Function(String) onRouteDescriptionChanged) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text('Descripción de la Ruta', style: titlelabelTextStyle),
+      const SizedBox(height: 8),
+      TextField(
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Ingrese una descripción',
+        ),
+        onChanged: onRouteDescriptionChanged,
+      ),
+    ],
+  );
+}
+
 Widget buildLabeledControl(String label, Widget control) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,

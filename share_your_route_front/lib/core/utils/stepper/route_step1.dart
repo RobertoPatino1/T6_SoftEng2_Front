@@ -3,6 +3,8 @@ import 'package:share_your_route_front/core/widgets/create_route_widgets.dart';
 
 class RouteStep1 extends StatefulWidget {
   final String routeName;
+  final String routeDescription;
+  final DateTime routeDate;
   final int numberOfPeople;
   final int numberOfGuides;
   final double rangeAlert;
@@ -10,6 +12,8 @@ class RouteStep1 extends StatefulWidget {
   final String alertSound;
   final bool publicRoute;
   final Function(String) onRouteNameChanged;
+  final Function(String) onRouteDescriptionChanged;
+  final Function(DateTime) onRouteDateChanged;
   final Function(int) onNumberOfPeopleChanged;
   final Function(int) onNumberOfGuidesChanged;
   final Function(double) onRangeAlertChanged;
@@ -20,6 +24,8 @@ class RouteStep1 extends StatefulWidget {
   const RouteStep1({
     super.key,
     required this.routeName,
+    required this.routeDescription,
+    required this.routeDate,
     required this.numberOfPeople,
     required this.numberOfGuides,
     required this.rangeAlert,
@@ -27,6 +33,8 @@ class RouteStep1 extends StatefulWidget {
     required this.alertSound,
     required this.publicRoute,
     required this.onRouteNameChanged,
+    required this.onRouteDescriptionChanged,
+    required this.onRouteDateChanged,
     required this.onNumberOfPeopleChanged,
     required this.onNumberOfGuidesChanged,
     required this.onRangeAlertChanged,
@@ -41,11 +49,13 @@ class RouteStep1 extends StatefulWidget {
 
 class _RouteStep1State extends State<RouteStep1> {
   late double currentRangeAlert;
+  late DateTime selectedDate;
 
   @override
   void initState() {
     super.initState();
     currentRangeAlert = widget.rangeAlert;
+    selectedDate = widget.routeDate;
   }
 
   @override
@@ -57,8 +67,11 @@ class _RouteStep1State extends State<RouteStep1> {
           const SizedBox(height: 20),
           buildRouteNameField(widget.routeName, widget.onRouteNameChanged),
           const SizedBox(height: 15),
+          buildRouteDescriptionField(
+              widget.routeDescription, widget.onRouteDescriptionChanged),
+          const SizedBox(height: 15),
           buildLabeledControl(
-              'Cantidad de personas',
+              'Número de personas',
               buildNumberChanger(
                   widget.numberOfPeople, widget.onNumberOfPeopleChanged)),
           const SizedBox(height: 15),
@@ -108,7 +121,37 @@ class _RouteStep1State extends State<RouteStep1> {
             onChanged: widget.onPublicRouteChanged,
             activeColor: const Color.fromRGBO(191, 141, 48, 1),
           ),
+          const SizedBox(height: 15),
+          const Text('Fecha de la ruta', style: titlelabelTextStyle),
+          const SizedBox(height: 8),
+          buildDatePicker(selectedDate, (date) {
+            setState(() {
+              selectedDate = date;
+            });
+            widget.onRouteDateChanged(date);
+          }),
         ],
+      ),
+    );
+  }
+
+  Widget buildDatePicker(
+      DateTime initialDate, Function(DateTime) onDateChanged) {
+    return TextButton(
+      onPressed: () async {
+        DateTime? pickedDate = await showDatePicker(
+          context: context,
+          initialDate: initialDate,
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2100),
+        );
+        if (pickedDate != null) {
+          onDateChanged(pickedDate);
+        }
+      },
+      child: Text(
+        '${initialDate.day}/${initialDate.month}/${initialDate.year}',
+        style: const TextStyle(fontSize: 16),
       ),
     );
   }

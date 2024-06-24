@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_your_route_front/modules/route_creation/presenters/add_stop_screen.dart';
-import 'package:share_your_route_front/modules/route_creation/presenters/view_stops_map_screen.dart'; // Importar la nueva pantalla
+import 'package:share_your_route_front/modules/route_creation/presenters/view_stops_map_screen.dart';
 
 class RouteStep2 extends StatefulWidget {
   final List<Map<String, dynamic>> stops;
@@ -26,14 +26,25 @@ class _RouteStep2State extends State<RouteStep2> {
     stops = List.from(widget.stops);
   }
 
-  void _addStop(String name, LatLng location, TimeOfDay time) {
-    final newStop = {'name': name, 'location': location, 'time': time};
+  void _addStop(
+    String name,
+    LatLng location,
+    TimeOfDay startTime,
+    TimeOfDay endTime,
+  ) {
+    final newStop = {
+      'name': name,
+      'location': location,
+      'startTime': startTime,
+      'endTime': endTime,
+    };
     setState(() {
       if (!stops.any(
         (stop) =>
             stop['name'] == name &&
             stop['location'] == location &&
-            stop['time'] == time,
+            stop['startTime'] == startTime &&
+            stop['endTime'] == endTime,
       )) {
         stops.add(newStop);
       }
@@ -48,6 +59,29 @@ class _RouteStep2State extends State<RouteStep2> {
     widget.onStopsChanged(stops);
   }
 
+  Future<void> _navigateToAddStopScreen() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => AddStopScreen(onStopAdded: _addStop),
+      ),
+    );
+
+    if (result != null && result is Map<String, dynamic>) {
+      final name = result['name'] as String?;
+      final location = result['location'] as LatLng?;
+      final startTime = result['startTime'] as TimeOfDay?;
+      final endTime = result['endTime'] as TimeOfDay?;
+
+      if (name != null &&
+          location != null &&
+          startTime != null &&
+          endTime != null) {
+        _addStop(name, location, startTime, endTime);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,22 +89,7 @@ class _RouteStep2State extends State<RouteStep2> {
       children: [
         if (stops.isEmpty)
           ElevatedButton(
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AddStopScreen(onStopAdded: _addStop),
-                ),
-              );
-
-              if (result != null && result is Map<String, dynamic>) {
-                _addStop(
-                  result['name'] as String,
-                  result['location'] as LatLng,
-                  result['time'] as TimeOfDay,
-                );
-              }
-            },
+            onPressed: _navigateToAddStopScreen,
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromRGBO(191, 141, 48, 1),
             ),
@@ -100,10 +119,16 @@ class _RouteStep2State extends State<RouteStep2> {
                 itemCount: stops.length,
                 itemBuilder: (context, index) {
                   final stop = stops[index];
+                  final startTime = stop['startTime'] as TimeOfDay?;
+                  final endTime = stop['endTime'] as TimeOfDay?;
+                  final name = stop['name'] as String?;
+
                   return Container(
                     margin: const EdgeInsets.symmetric(vertical: 2.0),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 4.0, horizontal: 8.0),
+                      vertical: 4.0,
+                      horizontal: 8.0,
+                    ),
                     decoration: BoxDecoration(
                       color: index.isEven
                           ? const Color.fromRGBO(45, 75, 115, 1)
@@ -114,7 +139,7 @@ class _RouteStep2State extends State<RouteStep2> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${stop['time'].format(context)}    ${stop['name']}',
+                          '${startTime?.format(context) ?? ''} - ${endTime?.format(context) ?? ''}    $name',
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -132,22 +157,7 @@ class _RouteStep2State extends State<RouteStep2> {
               ),
               const SizedBox(height: 15),
               ElevatedButton(
-                onPressed: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => AddStopScreen(onStopAdded: _addStop),
-                    ),
-                  );
-
-                  if (result != null && result is Map<String, dynamic>) {
-                    _addStop(
-                      result['name'] as String,
-                      result['location'] as LatLng,
-                      result['time'] as TimeOfDay,
-                    );
-                  }
-                },
+                onPressed: _navigateToAddStopScreen,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(191, 141, 48, 1),
                 ),

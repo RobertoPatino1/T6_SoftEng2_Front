@@ -79,10 +79,9 @@ class RouteItineraryPage extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: touristRoute.placesList.length,
                     itemBuilder: (context, index) {
-                      final Place place =
-                          touristRoute.placesList[index].keys.first;
-                      final String startTime = DateFormat('HH:mm')
-                          .format(touristRoute.placesList[index].values.first);
+                      final Place place = touristRoute.placesList[index];
+                      final String startTime =
+                          touristRoute.startTime.format(context);
                       return SizedBox(
                         width: 100,
                         height: 50,
@@ -98,7 +97,7 @@ class RouteItineraryPage extends StatelessWidget {
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  DateFormat('d-m-y').format(touristRoute.startTime),
+                  DateFormat("d-MM-yyyy").format(touristRoute.routeDate),
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
