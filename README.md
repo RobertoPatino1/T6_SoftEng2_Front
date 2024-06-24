@@ -1,4 +1,4 @@
-# T6_SoftEng2_Front
+# T6_SoftEng2
 
 ## How to run the project (front-end)
 **1. Clone the repository**
