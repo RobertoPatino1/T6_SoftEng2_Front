@@ -230,7 +230,7 @@ const { authenticate } = require("./middleware/authMiddleware");
 app.use("/api", authenticate, locationRoutes);
 ```
 
-#### Environment Variables
+#### 8. Environment Variables
 
 - **Standard:** Use environment variables for configuration.
 - **Description:** Environment variables help keep configuration secure and flexible across different environments.
