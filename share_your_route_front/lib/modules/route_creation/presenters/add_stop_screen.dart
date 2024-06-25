@@ -39,6 +39,7 @@ class _AddStopScreenState extends State<AddStopScreen> {
         });
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error searching location: $e');
     }
   }
@@ -83,8 +84,10 @@ class _AddStopScreenState extends State<AddStopScreen> {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back,
-              color: Color.fromRGBO(45, 75, 115, 1)),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Color.fromRGBO(45, 75, 115, 1),
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -174,9 +177,13 @@ class _AddStopScreenState extends State<AddStopScreen> {
                         selectedPosition != null) {
                       await selectTime(context);
                       if (selectedTime != null) {
-                        widget.onStopAdded(_stopNameController.text,
-                            selectedPosition!, selectedTime!);
+                        widget.onStopAdded(
+                          _stopNameController.text,
+                          selectedPosition!,
+                          selectedTime!,
+                        );
                         Navigator.pop(
+                          // ignore: use_build_context_synchronously
                           context,
                           {
                             'name': _stopNameController.text,

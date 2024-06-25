@@ -58,14 +58,20 @@ class _RouteStep1State extends State<RouteStep1> {
           buildRouteNameField(widget.routeName, widget.onRouteNameChanged),
           const SizedBox(height: 15),
           buildLabeledControl(
-              'Cantidad de personas',
-              buildNumberChanger(
-                  widget.numberOfPeople, widget.onNumberOfPeopleChanged)),
+            'Cantidad de personas',
+            buildNumberChanger(
+              widget.numberOfPeople,
+              widget.onNumberOfPeopleChanged,
+            ),
+          ),
           const SizedBox(height: 15),
           buildLabeledControl(
-              'Número de guías',
-              buildNumberChanger(
-                  widget.numberOfGuides, widget.onNumberOfGuidesChanged)),
+            'Número de guías',
+            buildNumberChanger(
+              widget.numberOfGuides,
+              widget.onNumberOfGuidesChanged,
+            ),
+          ),
           const SizedBox(height: 15),
           const Text('Rango de alerta', style: titlelabelTextStyle),
           const SizedBox(height: 8),
@@ -95,8 +101,10 @@ class _RouteStep1State extends State<RouteStep1> {
             activeColor: const Color.fromRGBO(191, 141, 48, 1),
           ),
           const SizedBox(height: 15),
-          buildLabeledControl('Sonido de alerta',
-              buildDropdown(widget.alertSound, widget.onAlertSoundChanged)),
+          buildLabeledControl(
+            'Sonido de alerta',
+            buildDropdown(widget.alertSound, widget.onAlertSoundChanged),
+          ),
           const SizedBox(height: 15),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,

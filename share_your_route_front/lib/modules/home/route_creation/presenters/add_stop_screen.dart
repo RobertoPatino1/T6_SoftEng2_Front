@@ -5,19 +5,21 @@ import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_your_route_front/modules/shared/services/location_service.dart';
 
-class LocationPickerScreen extends StatefulWidget {
-  final Function(LatLng?) onLocationSelected;
+class AddStopScreen extends StatefulWidget {
+  final Function(String, LatLng, TimeOfDay) onStopAdded;
 
-  const LocationPickerScreen({super.key, required this.onLocationSelected});
+  const AddStopScreen({super.key, required this.onStopAdded});
 
   @override
-  State<LocationPickerScreen> createState() => _LocationPickerScreenState();
+  State<AddStopScreen> createState() => _AddStopScreenState();
 }
 
-class _LocationPickerScreenState extends State<LocationPickerScreen> {
+class _AddStopScreenState extends State<AddStopScreen> {
   LatLng? myPosition;
   LatLng? selectedPosition;
   final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _stopNameController = TextEditingController();
+  TimeOfDay? selectedTime;
 
   Future<void> getCurrentLocation() async {
     final LatLng position = await LocationService.determinePosition();
@@ -48,13 +50,25 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
     super.initState();
   }
 
+  Future<void> selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime ?? TimeOfDay.now(),
+    );
+    if (picked != null && picked != selectedTime) {
+      setState(() {
+        selectedTime = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(
-          'Seleccionar Ubicación',
+          'Agregar Parada',
           style: TextStyle(
             fontSize: 20.0,
             color: Color.fromRGBO(45, 75, 115, 1),
@@ -75,6 +89,18 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _stopNameController,
+                    decoration: const InputDecoration(
+                      hintText: 'Nombre de la parada',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      ),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
@@ -138,15 +164,39 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    widget.onLocationSelected(selectedPosition);
-                    Navigator.pop(context, selectedPosition);
+                  onPressed: () async {
+                    if (_stopNameController.text.isNotEmpty &&
+                        selectedPosition != null) {
+                      await selectTime(context);
+                      if (selectedTime != null) {
+                        widget.onStopAdded(
+                          _stopNameController.text,
+                          selectedPosition!,
+                          selectedTime!,
+                        );
+                        Navigator.pop(
+                          // ignore: use_build_context_synchronously
+                          context,
+                          {
+                            'name': _stopNameController.text,
+                            'location': selectedPosition,
+                            'time': selectedTime,
+                          },
+                        );
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Por favor, complete todos los campos'),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(45, 75, 115, 1),
                   ),
                   child: const Text(
-                    'Confirmar ubicación',
+                    'Confirmar parada',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,

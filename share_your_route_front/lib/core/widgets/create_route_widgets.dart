@@ -13,12 +13,15 @@ const TextStyle boldlabelTextStyle = TextStyle(
 );
 
 const TextStyle titlelabelTextStyle = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w700,
-    color: Color.fromRGBO(47, 77, 114, 1));
+  fontSize: 16,
+  fontWeight: FontWeight.w700,
+  color: Color.fromRGBO(47, 77, 114, 1),
+);
 
 Widget buildRouteNameField(
-    String routeName, Function(String) onRouteNameChanged) {
+  String routeName,
+  Function(String) onRouteNameChanged,
+) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -63,16 +66,17 @@ Widget buildNumberChanger(int value, Function(int) onChanged) {
 
 Widget buildRangeSlider(double value, Function(double) onChanged) {
   return Slider(
-      value: value,
-      min: 1,
-      max: 10,
-      divisions: 9,
-      label: value.round().toString(),
-      onChanged: onChanged,
-      thumbColor: const Color.fromRGBO(191, 141, 48, 1),
-      secondaryActiveColor: const Color.fromRGBO(45, 75, 115, 1),
-      activeColor: const Color.fromRGBO(191, 141, 48, 1),
-      inactiveColor: const Color.fromARGB(255, 137, 137, 137));
+    value: value,
+    min: 1,
+    max: 10,
+    divisions: 9,
+    label: value.round().toString(),
+    onChanged: onChanged,
+    thumbColor: const Color.fromRGBO(191, 141, 48, 1),
+    secondaryActiveColor: const Color.fromRGBO(45, 75, 115, 1),
+    activeColor: const Color.fromRGBO(191, 141, 48, 1),
+    inactiveColor: const Color.fromARGB(255, 137, 137, 137),
+  );
 }
 
 Widget buildDropdown(String value, Function(String) onChanged) {
